@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://dusign.net/blog/</loc>
+    <lastmod>2023-07-08</lastmod>
+  </url>
+  <url>
     <loc>https://dusign.net/vm-jdk17/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
@@ -37,7 +41,7 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/redis-redis-main/</loc>
+    <loc>https://dusign.net/server-availablity/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -45,7 +49,7 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/server-availablity/</loc>
+    <loc>https://dusign.net/redis-redis-main/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -53,11 +57,11 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/nosql-mongo/</loc>
+    <loc>https://dusign.net/redis-red-lock/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/redis-red-lock/</loc>
+    <loc>https://dusign.net/nosql-mongo/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -65,7 +69,7 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/mysql-myql-excel-sql/</loc>
+    <loc>https://dusign.net/mysql-mysql-explain-plan/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -73,7 +77,11 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/mysql-mysql-explain-plan/</loc>
+    <loc>https://dusign.net/mysql-myql-excel-sql/</loc>
+    <lastmod>2023-05-26</lastmod>
+  </url>
+  <url>
+    <loc>https://dusign.net/mq-kafka/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -81,7 +89,7 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/mq-kafka/</loc>
+    <loc>https://dusign.net/es-es-set/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -93,15 +101,7 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/es-es-set/</loc>
-    <lastmod>2023-05-26</lastmod>
-  </url>
-  <url>
     <loc>https://dusign.net/error-error/</loc>
-    <lastmod>2023-05-26</lastmod>
-  </url>
-  <url>
-    <loc>https://dusign.net/blog/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>

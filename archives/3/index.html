@@ -326,19 +326,27 @@
 
         <div class="post-preview">
 
-            <a href="/mq-kafka/">
+            <a href="/mq-rabbitmq/">
                 <h2 class="post-title">
-                    kafka
+                    rabbit架构
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    kafka逻辑架构
+                    单机架构
+主要包含角色:
 
-Producer：Producer即生产者，消息的产生者，是消息的入口。
-Broker：Broker是kafka实例，每个服务器上有一个或多个kafka的实例，我们姑且认为每个broker对应一台服务器。每个kafka集群内的broker都有一个不重复的编号，如图中的broker-0、broker-1等……
-Topic：消息的主题，可以理解为消息的分类，kafka的数据......
+producer: 生产者
+comsumer: 消费者
+msg: 消息
+exchange： 交换机可以理解为路由规则 有dierct，fanout，topic，headers
+queue: 队列，存储消息
+channel： 虚拟通道，发送/接收消息都是通过这
+connection： 与mq的tcp链接
+Broker:简单来说，就是一个消息队列服务器实体。
+
+多机架......
                 </div>
             </a>
             
