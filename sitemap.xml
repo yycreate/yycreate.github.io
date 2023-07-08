@@ -9,6 +9,13 @@
   </url>
   
   <url>
+    <loc>https://dusign.net/plan/plan.html</loc>
+    
+    <lastmod>2023-05-26T15:54:30.521Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://dusign.net/plan/okr.html</loc>
     
     <lastmod>2023-05-26T15:54:30.521Z</lastmod>
@@ -17,13 +24,6 @@
   
   <url>
     <loc>https://dusign.net/plan/plan2.html</loc>
-    
-    <lastmod>2023-05-26T15:54:30.521Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://dusign.net/plan/plan.html</loc>
     
     <lastmod>2023-05-26T15:54:30.521Z</lastmod>
     
@@ -86,7 +86,7 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/redis-redis-point/</loc>
+    <loc>https://dusign.net/redis-redis-main/</loc>
     
     <lastmod>2023-05-26T15:54:30.235Z</lastmod>
     
@@ -100,7 +100,7 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/server-availablity/</loc>
+    <loc>https://dusign.net/redis-redis-point/</loc>
     
     <lastmod>2023-05-26T15:54:30.235Z</lastmod>
     
@@ -114,9 +114,16 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/redis-redis-main/</loc>
+    <loc>https://dusign.net/server-availablity/</loc>
     
     <lastmod>2023-05-26T15:54:30.235Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://dusign.net/nosql-mongo/</loc>
+    
+    <lastmod>2023-05-26T15:54:30.234Z</lastmod>
     
   </url>
   
@@ -135,16 +142,16 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/nosql-mongo/</loc>
+    <loc>https://dusign.net/mysql-transition-level/</loc>
     
-    <lastmod>2023-05-26T15:54:30.234Z</lastmod>
+    <lastmod>2023-05-26T15:54:30.233Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://dusign.net/mysql-transition-level/</loc>
+    <loc>https://dusign.net/mysql-myql-excel-sql/</loc>
     
-    <lastmod>2023-05-26T15:54:30.233Z</lastmod>
+    <lastmod>2023-05-26T15:54:30.232Z</lastmod>
     
   </url>
   
@@ -157,13 +164,6 @@
   
   <url>
     <loc>https://dusign.net/mysql-mysql-transition/</loc>
-    
-    <lastmod>2023-05-26T15:54:30.232Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://dusign.net/mysql-myql-excel-sql/</loc>
     
     <lastmod>2023-05-26T15:54:30.232Z</lastmod>
     
@@ -226,14 +226,14 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/categories/index.html</loc>
+    <loc>https://dusign.net/archive/index.html</loc>
     
     <lastmod>2023-05-26T15:52:20.998Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://dusign.net/archive/index.html</loc>
+    <loc>https://dusign.net/categories/index.html</loc>
     
     <lastmod>2023-05-26T15:52:20.998Z</lastmod>
     

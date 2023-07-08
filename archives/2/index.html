@@ -171,14 +171,14 @@
 
                         
                         <li>
-                            <a href="/categories/">Categories</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/categories/">Categories</a>
                         </li>
                         
                     
@@ -365,33 +365,50 @@
 
         <div class="post-preview">
 
-            <a href="/redis-redis-main/">
+            <a href="/server-availablity/">
                 <h2 class="post-title">
-                    redis整理场景以及使用
+                    高并发架构设计经验
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    一、高并发使用场景以及业务背景高并发解决的核心问题是在同一时间上有大量的请求过来，然后我们的系统要怎么抗住这些请求带来的压力。比如在线直播服务，同时有上百万甚至上千万人观看。比如秒杀品，同时有大量用户涌入。高并发是从业务角度去描述系统的能力，实现高并发的手段可以采用分布式，也可以采用缓存等，当然也包括多线程、协程，但远远不仅如此；高并发的基本表现为单位时间内系统能够同时处理的请求数，高并发的......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by eliooyang on
+                    2023-05-26
+                </p>
+                <div class="tags">
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/nosql-mongo/">
+                <h2 class="post-title">
+                    nosql-mongo
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
                     
-0.共识
-1.redis部署架构
-2.适用场景
-3.实际问题及其解决方案
-4.压测方案及容灾方案
-5.数据迁移与备份
+title: mongodb1.NO SCHEMA
+mongodb是文档型数据库，文档结构是BSON（binary serialized document format）的类JSON二进制存储格式。
+支持添加字段，还支持date和BinData数据类型，给予NO SCHEMA和SCHEMA FREE的特性。
 
-零.共识查询组件单线程，链接多路复用，有事务提交，但不能回滚。
-一.redis部署架构
-1.单机架构忽略吧 单机架构有相当多问题
-
-1.单点问题
-2.多路复用
-3.
-
-2.哨兵架构在部署redis的同时也需要部署哨兵，哨兵主要功能分为：
-
-监控redis主从节点的运行状况......
+2.mongodb复制集群复制集群保证mongodb数据的高可用。将数据复制到多......
                 </div>
             </a>
             
@@ -479,20 +496,15 @@ tcp 黏包/沾包
 
         <div class="post-preview">
 
-            <a href="/nosql-mongo/">
+            <a href="/mysql-transition-level/">
                 <h2 class="post-title">
-                    nosql-mongo
+                    mysql 优化方案
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    
-title: mongodb1.NO SCHEMA
-mongodb是文档型数据库，文档结构是BSON（binary serialized document format）的类JSON二进制存储格式。
-支持添加字段，还支持date和BinData数据类型，给予NO SCHEMA和SCHEMA FREE的特性。
-
-2.mongodb复制集群复制集群保证mongodb数据的高可用。将数据复制到多......
+                    1.索引优化索引大小优化避免索引失效联合索引，减少回表  2.单机优化3. 业务优化避免连表查询join拆表，热点字段放在主表4.主从部署优化5.分库分表优化6.多地容灾部署优化...
                 </div>
             </a>
             
@@ -514,15 +526,15 @@ mongodb是文档型数据库，文档结构是BSON（binary serialized document 
 
         <div class="post-preview">
 
-            <a href="/mysql-transition-level/">
+            <a href="/mysql-myql-excel-sql/">
                 <h2 class="post-title">
-                    mysql 优化方案
+                    SQL语句是如何执行的
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    1.索引优化索引大小优化避免索引失效联合索引，减少回表  2.单机优化3. 业务优化避免连表查询join拆表，热点字段放在主表4.主从部署优化5.分库分表优化6.多地容灾部署优化...
+                    mysql 结构执行excel的流程...
                 </div>
             </a>
             
@@ -603,36 +615,6 @@ mongodb是文档型数据库，文档结构是BSON（binary serialized document 
 缺点：
 
 当某个事务执行时，多次查询，会查询到不一样的结果。（不可重复读，重复读同一条数据结果可能不一致）简而言之:别的事务可能提交了新数据，导致同一个SQL......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by eliooyang on
-                    2023-05-26
-                </p>
-                <div class="tags">
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/mysql-myql-excel-sql/">
-                <h2 class="post-title">
-                    SQL语句是如何执行的
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    mysql 结构执行excel的流程...
                 </div>
             </a>
             
