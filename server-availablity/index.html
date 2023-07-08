@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="欢迎来到我的博客，找到有关代码或者摄影得的信息">
+    <meta name="keyword"  content="Java, photograph">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          高并发架构设计经验 - boom
+        
+    </title>
+
+    <link rel="canonical" href="https://dusign.net/server-availablity/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+                        <h1>高并发架构设计经验</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by eliooyang on
+                            2023-05-26
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">3k</span> and
+                                Reading Time <span class="post-count">10</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">boom no blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/photography/">Photography</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="YOUR_CHINESE_BLOG_URL" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="一、高并发使用场景以及业务背景"><a href="#一、高并发使用场景以及业务背景" class="headerlink" title="一、高并发使用场景以及业务背景"></a>一、高并发使用场景以及业务背景</h3><p>高并发解决的核心问题是在同一时间上有大量的请求过来，然后我们的系统要怎么抗住这些请求带来的压力。比如在线直播服务，同时有上百万甚至上千万人观看。比如秒杀品，同时有大量用户涌入。<br>高并发是从业务角度去描述系统的能力，实现高并发的手段可以采用分布式，也可以采用缓存等，当然也包括多线程、协程，但远远不仅如此；高并发的基本表现为单位时间内系统能够同时处理的请求数，高并发的核心是对资源的有效压榨，有限的资源应对大量的请求。<br>现代互联网服务，基本上都要考虑高并发问题，因为一般的产品，用户的请求量都很大。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="二、高并发架构设计经验"><a href="#二、高并发架构设计经验" class="headerlink" title="二、高并发架构设计经验"></a>二、高并发架构设计经验</h3><p>高并发架构设计，可以从三大层来建设和分析</p>
+<ul>
+<li>基础设施层：这个是最基础的依赖，主要是一些服务的部署。<ul>
+<li>强大的laas平台，可以跟业务隔离，基础平台提供问的服务，让开发设计更集中在业务中。</li>
+<li>持久层平台，缓存平台，消息处理平台等等技术</li>
+</ul>
+</li>
+<li>服务端架构层：可以粗浅地理解为业务代码，支持业务代码的各种服务。主要包括各种架构和模块的设计。<ul>
+<li>业务域</li>
+<li>支撑域</li>
+<li>核心域</li>
+<li>调用架构</li>
+<li>拓展架构</li>
+</ul>
+</li>
+<li>服务应用层： 这个主要是针对我们写的代码来进行优化改进，以及代码架构兼容运维架构，等等更多的工具开发。<ul>
+<li>devops架构</li>
+<li>运维架构，运维工具</li>
+<li>代码开发架构</li>
+<li>扩容，缩容，容灾架构</li>
+<li>安全架构</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-1、基础设施层"><a href="#2-1、基础设施层" class="headerlink" title="2-1、基础设施层"></a>2-1、基础设施层</h4><p>部署：多 IDC + 异地多活<br>基础设施层一般包含了服务器、IDC、部署方式等等。目前而言，我们一般都用容器部署的方式，而容器的底层能力基本也都是建立在 k8s 容器层之上的，服务本身的部署管理已经有成熟的设施帮我们实现了。具体到部署方式，包括但不限于：<br>多IDC机房部署。比如服务同时在粤西、东北两地部署。 这个依赖我们的服务是无状态的</p>
+<blockquote>
+<p>PS:异地多活架构等相关部署需要了解方案</p>
+</blockquote>
+<p>监控：可观测性<br>系统的可观测性主要包含三个部分: logging、tracing、metrics。<br>这个一般都要引入可观测系统，在异常中快速定位问题。（监控平台需要另外的团队去支持）</p>
+<h4 id="2-2、服务端架构层"><a href="#2-2、服务端架构层" class="headerlink" title="2-2、服务端架构层"></a>2-2、服务端架构层</h4><p>个人观点，要基于业务的特性，要保持可扩展，稳定高可用，兼容各类服务的特点。</p>
+<ul>
+<li>稳定性服务。保证一致性，性能放缓也可。</li>
+<li>高可用服务。消息吞吐，保证可用性高并发。</li>
+<li>支持调度服务，高可用，高吞吐。</li>
+</ul>
+<p>具体分析：支付系统，日志系统。</p>
+<h5 id="系统分层设计：分层、分割、分布式"><a href="#系统分层设计：分层、分割、分布式" class="headerlink" title="系统分层设计：分层、分割、分布式"></a>系统分层设计：分层、分割、分布式</h5><ul>
+<li><p>架构分层<br>将系统在横向维度上切分成几个部分，每一层的功能职责要足够单一，然后通过上层对下层的依赖和调度组成一个完整的系统<br>比如把电商系统分成：应用层，服务层，数据层。(具体分多少个层次根据自己的业务场景)<br>应用层：网站首页，用户中心，商品中心，购物车，红包业务，活动中心等，负责具体业务和视图展示<br>服务层：订单服务，用户管理服务，红包服务，商品服务等，为应用层提供服务支持<br>数据层：关系数据库，nosql数据库 等，提供数据存储查询服务</p>
+</li>
+<li><p>业务分割<br>在纵向方面对业务进行切分，将一块相对复杂的业务分割成不同的模块单元，对应的是模块的划分，通过合理的模块划分，使得每个模块都能可以满足 高内聚低耦合 的设计要求，这样不同的模块可以分布式部署，也能提高并发处理能力和功能扩展<br>比如用户中心可以分割成：账户信息模块，订单列表模块，充值模块，优惠券模块等</p>
+</li>
+<li><p>分布式<br>分布式应用和服务,将分层或者分割后的业务分布式部署，独立的应用服务器，数据库，缓存服务器，当业务达到一定用户量的时候，再进行服务器均衡负载，数据库，缓存主从集群</p>
+</li>
+</ul>
+<h5 id="集群架构设计：应用集群、数据集群"><a href="#集群架构设计：应用集群、数据集群" class="headerlink" title="集群架构设计：应用集群、数据集群"></a>集群架构设计：应用集群、数据集群</h5><p>应对高并发系统，不管是应用层面还是数据层面，单机都不可能搞定，因此都需要搭建集群架构，然后通过负载均衡来对外提供服务。同时集群架构还能保证系统的可用性，当某台服务或者机器异常，负载均衡会自动剔除，不会影响对外服务。<br>应用服务器集群。将业务层，接入层，应用层，数据层（持久层）分开部署，完全隔离，提供相应的接口相互访问。不同层级根据需求进行动态扩容或者拆分等等。</p>
+<h5 id="数据读写分离"><a href="#数据读写分离" class="headerlink" title="数据读写分离"></a>数据读写分离</h5><p>数据库设计：读写分离+分库分表+冷热分离<br>应对高并发，数据的存储，首先就要做好预估，先进行分库分表 和 读写分离，最后可以根据情况来看是否冷热分离：</p>
+<ul>
+<li>读写分离。互联网系统大多数都是读多写少，因此读写分离可以帮助主库抗量。一般我们都是一主多从的架构，可以抗量，也可以保证数据不丢。分库分表只能解决 QPS 高，但是无法解决 TPS 高，比如写入的量足够大的话（TPS 高），就得分库分表。</li>
+<li>分库分表。数据存储量大的时候，就需要通过分库分表来存储。先分，避免后期要拆，后期拆的话，就面临洗数据的问题，就需要采用双写模式来搞定。<br>分库分表模式虽然能显著提升数据库的容量，但会增加系统复杂性，而且由于只能支持少数的几个维度读写，从某种意义上来说对业务系统也是一种限制，因此在设计分库分表方案的时候需要结合具体业务场景，更全面的考虑。</li>
+<li>冷热分离。针对业务场景而言，如果数据有冷热之分的话，可以将历史冷数据与当前热数据分开存储，这样可以减轻当前热数据的存储量，可以提高性能。</li>
+</ul>
+<p>不过，既然是高并发系统，不能应用层直接读写 DB 的，一定有一个缓存在上面，如果直接读写 DB 能够搞定，其实不能叫高并发了，只能说是并发有点高。在非互联网系统里面还是可以的。</p>
+<h5 id="缓存设计：多级缓存架构和本地缓存"><a href="#缓存设计：多级缓存架构和本地缓存" class="headerlink" title="缓存设计：多级缓存架构和本地缓存"></a>缓存设计：多级缓存架构和本地缓存</h5><p>缓存的最大作用是可以提升系统性能，保护后端存储不被大流量打垮，增加系统的伸缩性。缓存的设计，需要分多个思路并行<br>首先要考虑的，就是必须在数据库之上，增加一层分布式缓存，比如 Redis 或者 Memcached。<br>这里需要考虑一下缓存和数据库一致性的问题。<br>其次需要考虑的是多级缓存架构。分几级缓存设计，同时设计热点缓存架构。<br>在分布式缓存之上，还可以加一个本地缓存，来缓存最热的数据<br>采用多个分布式缓存来搭建多级缓存。</p>
+<p>// todo 架构设计</p>
+<h5 id="消息队列设计：MQ-抗量和削峰"><a href="#消息队列设计：MQ-抗量和削峰" class="headerlink" title="消息队列设计：MQ 抗量和削峰"></a>消息队列设计：MQ 抗量和削峰</h5><p>针对流量突峰，仅仅有缓存来抗量可能还不够，还需要使用消息队列来削峰。使用消息队列后，可以将同步处理的请求改为 通过消费 MQ 消息来异步消费，这样可以大大减少系统处理的压力，增加系统的并发量。常用的消息队列比如 kafka。</p>
+<h5 id="服务治理设计：超时、熔断、降级、限流等"><a href="#服务治理设计：超时、熔断、降级、限流等" class="headerlink" title="服务治理设计：超时、熔断、降级、限流等"></a>服务治理设计：超时、熔断、降级、限流等</h5><p>超时、熔断、降级、限流等都是常规策略。<br>服务端框架的网关实现</p>
+<ul>
+<li>超时策略 </li>
+<li>熔断策略 </li>
+<li>降级策略 </li>
+<li>限流策略</li>
+</ul>
+<h5 id="资源隔离设计：-ZOOM-部署"><a href="#资源隔离设计：-ZOOM-部署" class="headerlink" title="资源隔离设计： ZOOM 部署"></a>资源隔离设计： ZOOM 部署</h5><p>资源隔离有各种类型，物理层面的服务器资源、中间件资源，代码层面的线程池、连接池，这些都可以做隔离。<br>一般我们最常见的就是应用部署层面的，比如ZOOM区域化部署。</p>
+<ul>
+<li>一个服务对外的使用方可能有 A 业务、B 业务，那么如何保证 AB 业务不会相互影响，那么就是 ZOOM 化部署。 ZOOM区域部署也可以防止非关键业务来影响关键核心业务。</li>
+<li>一个隔离的维度可以是按业务场景区分，分为关键集群、次关键集群和非关键集群三类，这样能避免关键和非关键业务互相影响。</li>
+</ul>
+<p>关于ZOOM区域的具体例子：</p>
+<ul>
+<li>微信红包用户发一个红包时，微信红包系统生成一个ID作为这个红包的唯一标识。接下来这个红包的所有发红包、抢红包、拆红包、查询红包详情等操作，都根据这个ID关联。红包系统根据这个红包ID，按一定的规则（如按ID尾号取模等），垂直上下切分。</li>
+<li>切分后，一个垂直链条上的逻辑Server服务器、DB统称为一个ZOOM。</li>
+<li>各个ZOOM之间相互独立，互相解耦。并且同一个红包ID的所有请求，包括发红包、抢红包、拆红包、查详情详情等，垂直stick到同一个ZOOM内处理，高度内聚。</li>
+<li>通过这样的方式，系统将所有红包请求这个巨大的洪流分散为多股小流，互不影响，分而治之，</li>
+</ul>
+<blockquote>
+<p>区域化，鉴于业务上的考虑以及对业务的兼容度评估</p>
+</blockquote>
+<h4 id="2-3、服务应用层"><a href="#2-3、服务应用层" class="headerlink" title="2-3、服务应用层"></a>2-3、服务应用层</h4><ul>
+<li><p>多线程、线程同步、协程<br>并发问题一直是服务端编程中的重点和难点问题，为了优化系统的并发量，单机解决高并发问题从最初的 Fork 进程开始，到进程池/线程池，再到 Epoll 事件驱动(Nginx)，再到协程（如 Goroutine）。<br>对于 Go 语言，尽可能的多使用协程去提高并发能力。</p>
+</li>
+<li><p>异步化<br>消息队列也是一种异步化操作，但是除了依赖外部的中间件如消息队列，在应用内我们也可以通过线程池、协程的方式做异步化，能异步的尽量异步处理，这样可以提高并发。</p>
+</li>
+<li><p>预处理：预加载、预热<br>系统的预热一般有JVM预热、缓存预热、DB预热等，通过预热的方式让系统先“热”起来，为高并发流量的到来做好准备。 </p>
+</li>
+<li>比如在电商的大促到来前，我们可以把一些热点的商品提前加载到缓存中，防止大流量冲击DB。</li>
+</ul>
+<p>Redis MS架构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<h3 id="前端业务设计"><a href="#前端业务设计" class="headerlink" title="前端业务设计"></a>前端业务设计</h3><p>还有一种预热的思路是利用业务的特性做一些预加载，</p>
+<ul>
+<li>feeds 流刷新的时候，提前加载 1-2 页数据，使用户端感觉不到加载卡顿，提高用户体验。</li>
+</ul>
+<hr>
+<div align="center">
+
+<font color = orange>你的支持是我加班的动力</font>
+<br/>
+
+<strong>微信</strong>
+<br/>
+<img src="https://yycreate.github.io/img/wxzf.jpg" style="width:256px;"/>
+
+
+<strong>支付宝</strong>
+<br/>
+<img src="https://yycreate.github.io/img/zfbzf_1.jpg" style="width:256px;"/>
+
+</div>
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/server-DDD-area/" data-toggle="tooltip" data-placement="top" title="DDD领域模型">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/protocol-tcp/" data-toggle="tooltip" data-placement="top" title="protocol-tcp">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="/css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/music-player/utill.js"></script>
+
+
+<script src="/js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="/js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://blog.csdn.net/qq_34033770" target="_blank">my csdn blog</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/none">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/none">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/none">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/dusignr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; eliooyang 2023 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dusign.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🍀&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="欢迎来到我的博客，找到有关代码或者摄影得的信息">
+    <meta name="keyword"  content="Java, photograph">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          jdk17 新特性 - boom
+        
+    </title>
+
+    <link rel="canonical" href="https://dusign.net/vm-jdk17/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+                        <h1>jdk17 新特性</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by eliooyang on
+                            2023-05-26
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">2.1k</span> and
+                                Reading Time <span class="post-count">8</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">boom no blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/photography/">Photography</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="YOUR_CHINESE_BLOG_URL" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <font color=#AF3232>关注版本更新，享受技术红利</font>
+
+<p>参考文档：</p>
+<p><a href="https://www.oracle.com/news/announcement/oracle-releases-java-17-2021-09-14/" target="_blank" rel="noopener">jdk17新特性，oracle文档</a></p>
+<p><a href="https://openjdk.org/jeps/403" target="_blank" rel="noopener">jdk17官方文档</a></p>
+<p><a href="https://www.oracle.com/downloads/licenses/no-fee-license.html" target="_blank" rel="noopener">jdk17商用协议</a></p>
+<blockquote>
+<p>是否说在jdk更新的版本中，不知道有什么新特性可以提高我们的开发效率，或者说新特性可以完成什么新需求？</p>
+</blockquote>
+<p>为了更好利用到版本更新的红利，本文为简单化了解一下，jdk17相对于8有什么新特性。</p>
+<h3 id="1-JDK17相关特性"><a href="#1-JDK17相关特性" class="headerlink" title="1.JDK17相关特性"></a>1.JDK17相关特性</h3><h4 id="stream-优化"><a href="#stream-优化" class="headerlink" title="stream 优化"></a>stream 优化</h4><p>总所周知，在jdk1.8中引入Stream-Api的流。</p>
+<h4 id="1-switch-增强"><a href="#1-switch-增强" class="headerlink" title="1.switch 增强"></a>1.switch 增强</h4><p>switch的模式匹配优化。 switch是仅支持同一种数据类型的判断。<br>在多个jdk版本的优化后在jdk17迎来最终的优化，原本需要进行null的判断，且switch不支持类型的判断。</p>
+<blockquote>
+<p>JDK17语法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SwitchDemo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Object o;</span><br><span class="line">        <span class="keyword">switch</span> (o) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="keyword">null</span>      -&gt; System.out.println(<span class="string">"判断是否为null"</span>);</span><br><span class="line">            <span class="keyword">case</span> String s  -&gt; System.out.println(<span class="string">"判断是否为字符串，s:"</span> + s);</span><br><span class="line">            <span class="keyword">case</span> record p  -&gt; System.out.println(<span class="string">"判断是否为Record类型: "</span> + p.toString());</span><br><span class="line">            <span class="keyword">case</span> <span class="keyword">int</span>[] arr -&gt; System.out.println(<span class="string">"判断是否为数组，长度"</span> + ia.length);</span><br><span class="line">            <span class="keyword">case</span> Integer i -&gt; System.out.println(<span class="string">"判断是否为Intger,i:"</span> + i);</span><br><span class="line">            <span class="keyword">case</span> Student s   -&gt; System.out.println(<span class="string">"判断是否为自定义对象，student:"</span> + s.toString());</span><br><span class="line">            <span class="keyword">default</span>   -&gt; System.out.println(<span class="string">"Something else"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>switch的增强历程，instanceof的模式匹配：</p>
+<ul>
+<li>JDK14作为preview，</li>
+<li>在JDK15作为第二轮的preview，</li>
+<li>在JDK16转正</li>
+</ul>
+</blockquote>
+<h4 id="2-恢复始终严格的浮点语义"><a href="#2-恢复始终严格的浮点语义" class="headerlink" title="2.恢复始终严格的浮点语义"></a>2.恢复始终严格的浮点语义</h4><h4 id="3-增强型伪随机数发生器"><a href="#3-增强型伪随机数发生器" class="headerlink" title="3.增强型伪随机数发生器"></a>3.增强型伪随机数发生器</h4><p>伪随机数生成器（PRNG）提供新的接口类型和实现，使程序使用各种PRNG算法更加容易，更好的支持流式编程。</p>
+<blockquote>
+<p>PRNG伪随机数，随机数会作用于下一个随机数，高效，周期性，确定性等特点，经常用于数学建模等场景。</p>
+</blockquote>
+<p>提供RandomGenerator统一生成PRNG的api，并提供工厂RandomGeneratorFactory生成实例<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PRNGDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//生成10个10以内的随机数</span></span><br><span class="line">        RandomGeneratorFactory&lt;RandomGenerator&gt; L128X1024MixRandom = RandomGeneratorFactory.of(<span class="string">"L128X1024MixRandom"</span>);</span><br><span class="line">        RandomGenerator randomGenerator = L128X1024MixRandom.create(System.currentTimeMillis());</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            System.out.println(randomGenerator.nextInt(<span class="number">10</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="4-macOs渲染管道"><a href="#4-macOs渲染管道" class="headerlink" title="4. macOs渲染管道"></a>4. macOs渲染管道</h4><p><a href="https://openjdk.org/jeps/382" target="_blank" rel="noopener">MACOS支持渲染内容</a></p>
+<p>主要是支持macos的一些ui渲染的支持。为了兼容Apple的渲染管道macOSMetal，Apple准备弃用的OpenGL API作的更新。<br>同时也兼容OpenGL的使用，知道被启用为止。</p>
+<h4 id="5-支持macOS-AArch64平台支持，虚拟机跨平台的支持"><a href="#5-支持macOS-AArch64平台支持，虚拟机跨平台的支持" class="headerlink" title="5. 支持macOS/AArch64平台支持，虚拟机跨平台的支持"></a>5. 支持macOS/AArch64平台支持，虚拟机跨平台的支持</h4><p><a href="https://openjdk.org/jeps/391" target="_blank" rel="noopener">兼容系统的协议</a><br>可将jdk移植到macOS/AArch64，上述系统有（W^X）的策略，禁止内存段同时可执行可写。<br>HotSpot VM定期创建和修改可执行代码，因此JEP将在HotSpot for macOS/AArch64中实现W^X支持。</p>
+<p>人家有用户就是霸气，乙方就得兼容。</p>
+<h4 id="6。删除已弃用Applet-API"><a href="#6。删除已弃用Applet-API" class="headerlink" title="6。删除已弃用Applet API"></a>6。删除已弃用Applet API</h4><p><a href="https://openjdk.org/jeps/398" target="_blank" rel="noopener">APPLET弃用</a><br>稍微介绍一下Applet是什么，为何弃用。</p>
+<blockquote>
+<p>功能： 一般运行在支持Java的Web浏览器，Java客户端的运行浏览器，有自己的生命周期。<br>例如这种，年轻人们是不是没见过，取消这个Applet的生态主要是现在前端生态百花齐放，基本没有运用场景了。</p>
+</blockquote>
+<p><img src="img.png" alt="img.png"></p>
+<h4 id="7-移除RMI"><a href="#7-移除RMI" class="headerlink" title="7.移除RMI"></a>7.移除RMI</h4><p><a href="https://openjdk.org/jeps/407" target="_blank" rel="noopener">Remove RMI Activation</a></p>
+<p>满足好奇心，什么是rmi，下面是demo：</p>
+<p>rmi 是一种远程通信协议，通过接口进行通信。</p>
+<p>server端<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RmiServer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//创建一个远程对象</span></span><br><span class="line">            IRmi rmiHello = <span class="keyword">new</span> RmiImpl();</span><br><span class="line"></span><br><span class="line">            <span class="comment">//远程主机远程对象注册表Registry的实例，并指定端口为8888，这一步必不可少（Java默认端口是1099），</span></span><br><span class="line">            <span class="comment">// 必不可缺的一步，缺少注册表创建，则无法绑定对象到远程注册表上</span></span><br><span class="line">            LocateRegistry.createRegistry(<span class="number">8888</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//把远程对象注册到RMI注册服务器上，并命名为RHello</span></span><br><span class="line">            <span class="comment">//绑定的URL标准格式为：rmi://host:port/name(其中协议名可以省略，下面两种写法都是正确的）</span></span><br><span class="line">            Naming.bind(<span class="string">"rmi://localhost:8888/RmiHello"</span>,rmiHello);</span><br><span class="line">            <span class="comment">//Naming.bind("//localhost:8888/RmiHello",rmiHello);</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//必须捕获这三个异常，否则需要在main方法中抛出</span></span><br><span class="line">        &#125;  <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">            System.out.println(<span class="string">"创建远程对象发生异常"</span>);</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</span><br><span class="line">            System.out.println(<span class="string">"URL畸形异常"</span>);</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (AlreadyBoundException e) &#123;</span><br><span class="line">            System.out.println(<span class="string">"重复绑定对象异常"</span>);</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>client端<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloClient</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String []args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//在RMI服务注册表中查找名称为RHello的对象，并调用其上的方法</span></span><br><span class="line">            IRmi localHello = (IHello)Naming.lookup(<span class="string">"rmi://localhost:8888/RmiHello"</span>);</span><br><span class="line">            System.out.println(localHello.say());</span><br><span class="line">            System.out.println(localHello.sayTo(<span class="string">"11111"</span>));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NotBoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (MalformedURLException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="8-密封类"><a href="#8-密封类" class="headerlink" title="8.密封类"></a>8.密封类</h4><p><a href="https://openjdk.org/jeps/409" target="_blank" rel="noopener">Sealed Classes</a></p>
+<p>主要是做接口限制，指定哪些类可以实现或者扩展。</p>
+<p><code>sealed</code>声明密封类， <code>permits</code>声明可以继承的类；<br>仅有 <code>Circle</code>,<code>Rectangle</code>,<code>Square</code>可以继承<code>Shape</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> sealed <span class="class"><span class="keyword">class</span> <span class="title">Shape</span> </span></span><br><span class="line"><span class="class">    <span class="title">permits</span> <span class="title">Circle</span>,</span></span><br><span class="line"><span class="class">            <span class="title">Rectangle</span>,</span></span><br><span class="line"><span class="class">            <span class="title">Square</span> </span>&#123;  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>// todo</p>
+<h4 id="9-移除AOT及JIT-Compiler"><a href="#9-移除AOT及JIT-Compiler" class="headerlink" title="9.移除AOT及JIT Compiler"></a>9.移除AOT及JIT Compiler</h4><p><a href="https://openjdk.java.net/jeps/410" target="_blank" rel="noopener">Remove the Experimental AOT and JIT Compiler</a></p>
+<p>原本的Java编译流程是JIT编译</p>
+<p>AOT 提前编译，优化spring框架启动慢，占用内存多的特性，垃圾无法被回收问题。</p>
+<p>spring Native基于Graal VM编译成原生镜像，云原生友好</p>
+<h4 id="10-废弃Security-Manager"><a href="#10-废弃Security-Manager" class="headerlink" title="10.废弃Security Manager"></a>10.废弃Security Manager</h4><p><a href="https://openjdk.org/jeps/411" target="_blank" rel="noopener">Deprecate the Security Manager for Removal</a></p>
+<p>这个是从java1.0保护客户端的代码，服务于Applet。也是由于发展原因随着Applet一起被删除。</p>
+<h4 id="11-外部函数和内存API"><a href="#11-外部函数和内存API" class="headerlink" title="11.外部函数和内存API"></a>11.外部函数和内存API</h4><p><a href="https://openjdk.java.net/jeps/412" target="_blank" rel="noopener">Foreign Function &amp; Memory API (Incubator)</a></p>
+<p>新的API，Java程序可以与Java运行时之外的代码和数据进行互操作。通过有效地调用外部函数（即JVM外部的代码），并安全地访问外部内存（即不由JVM管理的内存），API使Java程序能够调用本地库并处理本地数据，而不会出现JNI的脆弱性和危险。</p>
+<p>以前是通过JNI去调用C++/C代码取跟内存进行交互的，这里是指JVM内存结构内<code>堆</code>以外的内存，现在提供一套API替换JNI的功能</p>
+<ul>
+<li>易用性，相对于JNI更容易使用，java开发的模型对象</li>
+<li>性能与现有的JNI与<code>sun.misc.Unsafe</code>相比不差</li>
+<li>安全性上，默认禁用不安全操作</li>
+</ul>
+<blockquote>
+<p>分配外部内存:MemorySegment，MemoryAddress，SegmentAllocator</p>
+<p>操作和访问结构化外部内存：MemoryLayout，MemoryHandles，MemoryAccess</p>
+<p>管理外部资源的生命周期：ResourceScope</p>
+<p>调用外部函数 SymbolLookup，CLinker </p>
+</blockquote>
+<p>举例子<br>如<code>MemorySegment</code> 连续内存的模型</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MemoryDemo</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> (MemorySegment segment = MemorySegment.allocateNative(<span class="number">100</span>)) &#123;</span><br><span class="line">            <span class="keyword">int</span> sum = StreamSupport.stream(MemorySegment.spliterator(segment.withOwnerThread(<span class="keyword">null</span>),seq_bulk),<span class="keyword">true</span>)</span><br><span class="line">                    .mapToInt(slice -&gt; &#123;</span><br><span class="line">                        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">                        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span> ; i++) &#123;</span><br><span class="line">                            res += MemoryAccess.getIntAtIndex(slice, i);</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">return</span> res;</span><br><span class="line">                    &#125;).sum();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="12-矢量API"><a href="#12-矢量API" class="headerlink" title="12.矢量API"></a>12.矢量API</h4><p><a href="https://openjdk.java.net/jeps/414" target="_blank" rel="noopener">Vector API (Second Incubator)</a></p>
+<p>向量API是从JDK16开始引入的。<br>向量相关定义API,三维向量：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VectorDemo</span> </span>&#123;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> VectorSpecies&lt;Float&gt; SPECIES = FloatVector.SPECIES_256;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">vectorComputation</span><span class="params">(<span class="keyword">float</span>[] a, <span class="keyword">float</span>[] b, <span class="keyword">float</span>[] c)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i += SPECIES.length()) &#123;</span><br><span class="line">            <span class="keyword">var</span> m = SPECIES.indexInRange(i, a.length);</span><br><span class="line">            <span class="comment">// FloatVector va, vb, vc;</span></span><br><span class="line">            <span class="keyword">var</span> va = FloatVector.fromArray(SPECIES, a, i, m);</span><br><span class="line">            <span class="keyword">var</span> vb = FloatVector.fromArray(SPECIES, b, i, m);</span><br><span class="line">            <span class="keyword">var</span> vc = va.mul(va).</span><br><span class="line">                    add(vb.mul(vb)).</span><br><span class="line">                    neg();</span><br><span class="line">            vc.intoArray(c, i, m);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<font color=A31212>个人感觉应用不多，忽略忽略</font>
+
+
+
+<h4 id="13-实现特定于上下文的反序列化过滤器"><a href="#13-实现特定于上下文的反序列化过滤器" class="headerlink" title="13.实现特定于上下文的反序列化过滤器"></a>13.实现特定于上下文的反序列化过滤器</h4><p><a href="https://openjdk.java.net/jeps/415" target="_blank" rel="noopener">Context-Specific Deserialization Filters</a></p>
+<blockquote>
+<p>对不受信任的数据进行反序列化是一种固有的危险活动，因为传入数据流的内容决定了创建的对象、其字段的值以及它们之间的引用。 </p>
+<p>在许多典型的使用中，流中的字节是从未知、不可信或未经身份验证的客户端接收的。 </p>
+<p>通过小心地构造流，对手可能会导致恶意执行任意类中的代码。 </p>
+<p>如果对象构造有改变状态或调用其他操作的副作用，这些操作可能会危及应用程序对象、库对象甚至Java运行时的完整性。 </p>
+<p>关键是防止任意类的实例被反序列化，从而防止直接或间接地执行它们的方法。</p>
+</blockquote>
+<p>简而言之，就是在数据流在反序列化之前可以通过自定义过滤器去做校验，验证这个数据的安全性。<br>原本JDK9引入了数据流的反序列化功能，就是嫌弃流操作太麻烦了，jdk17又提供了API形式的反序列化类。<br>如<code>BinaryOperator&lt;ObjectInputFilter&gt;</code>。</p>
+<hr>
+<div align="center">
+
+<font color = orange>你的支持是我加班的动力</font>
+<br/>
+
+<strong>微信</strong>
+<br/>
+<img src="https://yycreate.github.io/img/wxzf.jpg" style="width:256px;"/>
+
+
+<strong>支付宝</strong>
+<br/>
+<img src="https://yycreate.github.io/img/zfbzf_1.jpg" style="width:256px;"/>
+
+</div>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/user-shop/" data-toggle="tooltip" data-placement="top" title="电商需求">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="/css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/music-player/utill.js"></script>
+
+
+<script src="/js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="/js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://blog.csdn.net/qq_34033770" target="_blank">my csdn blog</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/none">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/none">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/none">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/dusignr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; eliooyang 2023 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dusign.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🍀&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>

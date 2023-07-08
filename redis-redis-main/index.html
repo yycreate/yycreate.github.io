@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="欢迎来到我的博客，找到有关代码或者摄影得的信息">
+    <meta name="keyword"  content="Java, photograph">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          redis整理场景以及使用 - boom
+        
+    </title>
+
+    <link rel="canonical" href="https://dusign.net/redis-redis-main/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/dusign.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                        </div>
+                        <h1>redis整理场景以及使用</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by eliooyang on
+                            2023-05-26
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">3.1k</span> and
+                                Reading Time <span class="post-count">11</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">boom no blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/categories/">Categories</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/photography/">Photography</a>
+                        </li>
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                    <li>
+                        <a href="YOUR_CHINESE_BLOG_URL" target="_blank">Chinese Blog</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <ul>
+<li><a href="#零.共识">0.共识</a></li>
+<li><a href="#一.redis部署架构">1.redis部署架构</a></li>
+<li><a href="#二.适用场景">2.适用场景</a></li>
+<li><a href="#三.实际问题及其解决方案">3.实际问题及其解决方案</a></li>
+<li><a href="#四.压测方案及容灾方案">4.压测方案及容灾方案</a></li>
+<li><a href="#五.数据迁移与备份">5.数据迁移与备份</a></li>
+</ul>
+<h3 id="零-共识"><a href="#零-共识" class="headerlink" title="零.共识"></a>零.共识</h3><p>查询组件单线程，链接多路复用，有事务提交，但不能回滚。</p>
+<h3 id="一-redis部署架构"><a href="#一-redis部署架构" class="headerlink" title="一.redis部署架构"></a>一.redis部署架构</h3><hr>
+<h4 id="1-单机架构"><a href="#1-单机架构" class="headerlink" title="1.单机架构"></a>1.单机架构</h4><p>忽略吧 单机架构有相当多问题</p>
+<ul>
+<li>1.单点问题</li>
+<li>2.多路复用</li>
+<li>3.</li>
+</ul>
+<h4 id="2-哨兵架构"><a href="#2-哨兵架构" class="headerlink" title="2.哨兵架构"></a>2.哨兵架构</h4><p>在部署redis的同时也需要部署哨兵，哨兵主要功能分为：</p>
+<ul>
+<li>监控redis主从节点的运行状况</li>
+<li>当master节点挂了之后，选出master</li>
+</ul>
+<p>部署拓扑<br><img src="https://yycreate.github.io/img/image/redis/sentinel.png" alt="img.png"></p>
+<p>master节点配置<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">### REDIS MASYER</span><br><span class="line">port <span class="number">6379</span></span><br><span class="line">daemonize <span class="keyword">no</span></span><br><span class="line">#logfile <span class="string">"6379.log"</span></span><br><span class="line">dir /redis-<span class="number">4.0</span>.<span class="number">0</span>/data</span><br><span class="line">dbfilename dump-<span class="number">6379</span>.rdb</span><br><span class="line">rdbcompression yes</span><br><span class="line">rdbchecksum yes</span><br><span class="line">save <span class="number">10</span> <span class="number">2</span></span><br><span class="line">appendonly yes</span><br><span class="line">appendfsync always</span><br><span class="line">appendfilename appendonly-<span class="number">6379</span>.aof</span><br><span class="line">bind <span class="number">127.0</span>.<span class="number">0.1</span></span><br><span class="line">databases <span class="number">16</span></span><br></pre></td></tr></table></figure></p>
+<p>slave节点配置<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">### REDIS SLAVE</span><br><span class="line">port <span class="number">6380</span></span><br><span class="line">daemonize <span class="keyword">no</span></span><br><span class="line">#logfile <span class="string">"6380.log"</span></span><br><span class="line">dir /redis-<span class="number">4.0</span>.<span class="number">0</span>/data</span><br><span class="line">slaveof <span class="number">127.0</span>.<span class="number">0.1</span> <span class="number">6379</span></span><br></pre></td></tr></table></figure></p>
+<p>sentinel哨兵节点配置<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">### SENTINEL</span><br><span class="line">port <span class="number">26379</span></span><br><span class="line">dir /redis-<span class="number">4.0</span>.<span class="number">0</span>/data</span><br><span class="line"># 监控 主 连接字符串 哨兵判挂标准（几个哨兵认定他挂了，就判定为主挂了，通常为哨兵数量的一半加一）</span><br><span class="line">sentinel monitor mymaster <span class="number">127.0</span>.<span class="number">0.1</span> <span class="number">6379</span> <span class="number">2</span></span><br><span class="line"># 无响应时间，为挂掉</span><br><span class="line">sentinel down-after-milliseconds mymaster <span class="number">30000</span> </span><br><span class="line"># 主挂了之后，新的主上任同步数据的路线数量，数值越小，对服务器压力越小</span><br><span class="line">sentinel parallel-syncs mymaster <span class="number">1</span> #</span><br><span class="line"># 新主同步数据时，多长时间同步完算有效 （默认 <span class="number">180</span>s）</span><br><span class="line">sentinel failover-timeout mymaster <span class="number">180000</span></span><br></pre></td></tr></table></figure></p>
+<p>自动故障转移<br><img src="https://yycreate.github.io/img/image/redis/sentinel_change.png" alt="sentinel_change.png"></p>
+<blockquote>
+<p>如何选择新的redis主节点呢？</p>
+<p>当master节点跟哨兵过半失联的时候会发生重新选举：</p>
+<p>1.优先级排序，可以根据配置文件的 <code>replicapriority n</code> 来判断优先级，n越小越优先。</p>
+<p>2.复制数量，如果优先级相同，复制偏移量最大的选主（表示复制原master数据最多）</p>
+<p>3.进程id，如果复制数量也相同，就选择进程id最小的那个</p>
+</blockquote>
+<p>数据流动</p>
+<p>// TODO</p>
+<p>spring配置</p>
+<p>// TODO</p>
+<h4 id="集群架构-Cluster"><a href="#集群架构-Cluster" class="headerlink" title="集群架构 Cluster"></a>集群架构 Cluster</h4><p>Redis Cluster是服务器sharding技术，redis3.0开始支持。</p>
+<p>数据会根据slot分配给多个master，对应的master和slave的数据时相同的；<br>当master宕机时候，对应的slave会顶替master位置继续提供服务。</p>
+<blockquote>
+<p>gossip是提供给集群内所有节点的一个数据最终一致性方案，但会根据slot获取对应的数据。</p>
+<p>每个master节点都根据slot分配不同的数据，但由于增加节点/裁撤等等变更会导致slot之间数据迁移，通过gossip协议同步。</p>
+<p>gossip协议是一个随机通信，可以理解为“传染病”，在传播信息同时会有延迟（缺点）</p>
+</blockquote>
+<p>部署拓扑<br><img src="https://yycreate.github.io/img/image/redis/redis_cluster.png" alt="redis_cluster.png"></p>
+<blockquote>
+<p>gossip协议适用场景：新增节点/slot迁移/节点宕机/slave选举为master（slave可以使多个master的从节点）</p>
+<p>gossip 协议包含多种消息，包括 ping，pong，meet，fail 等等。</p>
+</blockquote>
+<p>spring配置</p>
+<p>redission链接cluster<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">spring：</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="comment">#    host: 127.0.0.1</span></span><br><span class="line">    <span class="comment">#    port: 6379</span></span><br><span class="line">    <span class="attr">cluster:</span></span><br><span class="line">      <span class="attr">nodes:</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span><span class="string">:7001,127.0.0.1:7002,127.0.0.1:7003,127.0.0.1:7004,127.0.0.1:7005,127.0.0.1:7006</span></span><br><span class="line">    <span class="attr">password:</span> <span class="number">123456</span></span><br><span class="line">    <span class="comment">## Redis数据库索引(默认为0)</span></span><br><span class="line">    <span class="attr">database:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">lettuce:</span></span><br><span class="line">      <span class="attr">pool:</span></span><br><span class="line">        <span class="comment">## 连接池最大连接数（使用负值表示没有限制）</span></span><br><span class="line">        <span class="attr">max-active:</span> <span class="number">100</span></span><br><span class="line">        <span class="comment">## 连接池最大阻塞等待时间（使用负值表示没有限制）</span></span><br><span class="line">        <span class="attr">max-wait:</span> <span class="number">100000</span></span><br><span class="line">        <span class="comment">## 连接池中的最大空闲连接</span></span><br><span class="line">        <span class="attr">max-idle:</span> <span class="number">10</span></span><br><span class="line">        <span class="comment">## 连接池中的最小空闲连接</span></span><br><span class="line">        <span class="attr">min-idle:</span> <span class="number">0</span></span><br><span class="line">    <span class="comment">## 连接超时时间（毫秒）</span></span><br><span class="line">    <span class="attr">timeout:</span> <span class="number">30000</span></span><br></pre></td></tr></table></figure></p>
+<p>POM依赖<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.redisson<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>redisson-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.12.5<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>SPRIING REDIS CONFIG<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RedissonConfig</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.redis.cluster.nodes&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; nodes;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.redis.password&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.redis.database&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> Integer database;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> RedissonClient <span class="title">clusterRedisClient</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Config config = <span class="keyword">new</span> Config();</span><br><span class="line">        ClusterServersConfig clusterServersConfig = config.useClusterServers();</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> (!StringUtils.isBlank(password)) &#123;</span><br><span class="line">            clusterServersConfig.setPassword(password);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 集群状态扫描间隔时间，单位是毫秒</span></span><br><span class="line">        clusterServersConfig.setScanInterval(<span class="number">2000</span>);</span><br><span class="line">        <span class="keyword">for</span> (String node : nodes) &#123;</span><br><span class="line">            String url = <span class="string">"redis://"</span> + node;</span><br><span class="line">            clusterServersConfig.addNodeAddress(url);</span><br><span class="line">        &#125;</span><br><span class="line">        RedissonClient redissonClient = Redisson.create(config);</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> redissonClient;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>codis框架图</p>
+<p>codis 包含 <code>codis-proxy</code>,<code>codis-redis-group</code>,<code>codis-redis</code> 3个组件</p>
+<h3 id="二-适用场景"><a href="#二-适用场景" class="headerlink" title="二.适用场景"></a>二.适用场景</h3><hr>
+<ol>
+<li>缓存</li>
+<li>秒杀</li>
+<li>支付配置</li>
+<li>热点数据</li>
+<li>配置信息</li>
+<li>zset 实现</li>
+<li>redis-hash 两种实现<ol>
+<li></li>
+</ol>
+</li>
+</ol>
+<h3 id="三-实际问题及其解决方案"><a href="#三-实际问题及其解决方案" class="headerlink" title="三.实际问题及其解决方案"></a>三.实际问题及其解决方案</h3><hr>
+<h4 id="1-大key原因及解决方案，为何大key会引起性能问题"><a href="#1-大key原因及解决方案，为何大key会引起性能问题" class="headerlink" title="1. 大key原因及解决方案，为何大key会引起性能问题"></a>1. 大key原因及解决方案，为何大key会引起性能问题</h4><h5 id="1-1-影响性能的主要原因"><a href="#1-1-影响性能的主要原因" class="headerlink" title="1.1 影响性能的主要原因"></a>1.1 影响性能的主要原因</h5><p>1.1.1 占用内存增大：相比于正常的Key，读取大key需要的内存会有所增大，<br>如果像是value中的list不断变大，可能会造成OOM（内存溢出），<br>还有一种就是达到redis设置的最大内存maxmemory值会造成写阻塞或者部分重要的Key被redis的淘汰策略给删除了。</p>
+<ul>
+<li>hash性能问题主要体现在遍历链表，当hash量很大时会存在hash冲突，然后redis要做大量的rehash。</li>
+</ul>
+<p>1.1.2 网络阻塞延迟变大：在读取大key的时候，由于读取的内容较多，占用较大的带宽，造成网络带宽的阻塞，也会影响其他的应用，导致网络阻塞延迟变大。</p>
+<ul>
+<li>主从模式，大key会使内存使用不均匀。</li>
+<li>若key达到M，访问为1000，每秒1000M流量，千兆网卡顶不住。</li>
+<li>排查是否有bigkeys<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 排查大对象</span></span><br><span class="line"> redis-cli -h &#123;ip&#125; -p &#123;port&#125; bigkeys</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>1.1.3 IO阻塞延迟增大：主流程为单线程，读写时串行的，多个请求过来时，可能因为单个BigKey的原因可能造成IO阻塞延迟。</p>
+<ul>
+<li>swap 如果一个 Redis 实例的内存使用率超过可用最大内存（used_memory &gt; 可用最大内存），那么操作系统开始进行内存和 swap 空间交换，把内存中旧的或不再使用的内容写入硬盘上（硬盘上的这块空间叫 Swap 分区），以便腾出新的物理内存给新页使用。</li>
+<li>fork 子进程，在 RDB 生成和 AOF 重写时，会 fork 一个子进程完成持久化工作，fork持久化与数据集有关</li>
+<li>AOF 刷盘阻塞，开启 AOF，文件刷盘一般每秒一次，硬盘压力过大时，fsync 需要等待写入完成。 查看 redis 日志或 info persistence 统计中的 aof_delayed_fsync 指标。</li>
+</ul>
+<p>1.1.4 BigKey迁移困难:这个问题是出现在Redis集群中，实际上是通过migrate命令来完成的，migrate实际上是通过dump + restore + del三个命令组合成原子命令完成，如果是bigkey，可能会使迁移失败，而且较慢的migrate会阻塞Redis。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## MIGRATE [HOST] [PORT] [DB] [TIMEOUT]</span></span></span><br><span class="line">MIGRATE 127.0.0.1 7777 key 0 1000</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## MIGRATE 相当于 dump del restore</span></span></span><br><span class="line">dump 源实例</span><br><span class="line">del 源实例</span><br><span class="line">restore 目标实例</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="2-设计方案：一个接口查询100key提高性能"><a href="#2-设计方案：一个接口查询100key提高性能" class="headerlink" title="2. 设计方案：一个接口查询100key提高性能"></a>2. 设计方案：一个接口查询100key提高性能</h4><h5 id="2-1-管道-pipeline-替换普通的set-key-value"><a href="#2-1-管道-pipeline-替换普通的set-key-value" class="headerlink" title="2.1 管道 pipeline 替换普通的set-key-value"></a>2.1 管道 pipeline 替换普通的set-key-value</h5><p>使用pipeline可以减少多次命令执行的网络等待时间，提高多个key操作的相应速率。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PipelineExample</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"127.0.0.1"</span>, <span class="number">6379</span>);</span><br><span class="line">        <span class="comment">// 获取 Pipeline 对象</span></span><br><span class="line">        Pipeline pipe = jedis.pipelined();</span><br><span class="line">        <span class="comment">// 设置多个 Redis 命令</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">            pipe.set(<span class="string">"key"</span> + i, <span class="string">"val"</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 执行命令并返回结果</span></span><br><span class="line">        List&lt;Object&gt; res = pipe.syncAndReturnAll();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h5 id="2-2-内部缓存（不适合数据量大的场景）"><a href="#2-2-内部缓存（不适合数据量大的场景）" class="headerlink" title="2.2 内部缓存（不适合数据量大的场景）"></a>2.2 内部缓存（不适合数据量大的场景）</h5><p>将小量且不变的数据存储在gavua-cache中，不使用网络访问redis，去除不使用建立网络链接的时间，提高速度。</p>
+<hr>
+<h4 id="3-redis集群引发多个key不落在同一个槽位（slot）问题"><a href="#3-redis集群引发多个key不落在同一个槽位（slot）问题" class="headerlink" title="3. redis集群引发多个key不落在同一个槽位（slot）问题"></a>3. redis集群引发多个key不落在同一个槽位（slot）问题</h4><h5 id="3-1-引发原因"><a href="#3-1-引发原因" class="headerlink" title="3.1 引发原因"></a>3.1 引发原因</h5><p>redis在单节点情况下槽位是属于一个片区的，同一个key在hash运算下一定会分配到一个一个节点上。<br>然而在集群模式中，槽位负载均衡到不同的节点上，通过hash计算的key值具体落槽点在不同节点上。<br>同时引起另外的问题，在集群模式中，一个请求多给key进行操作限制在一个slot中，不能跨槽执行。<br>lua脚本对多个key进行操作的时候，key在hash后落在多个slot。会引发“CROSSSLOT Keys in request don‘t hash to the same slot”</p>
+<h5 id="3-2-解决方案"><a href="#3-2-解决方案" class="headerlink" title="3.2 解决方案"></a>3.2 解决方案</h5><p>主要原因：</p>
+<ul>
+<li>业务操作多个key，且key不在同一个节点上<br>解决：</li>
+<li>根据业务不同的key，分别在不同的业务中执行</li>
+<li>可以根据唯一的key将业务属性放在一个map中</li>
+</ul>
+<blockquote>
+<p>槽位(slot)： Redis集群通过分片的方式来保存数据库中的键值对，集群的整个数据库被分为16384个槽，数据库中的每个键都属于这16384个槽的其中一个，集群中的每个节点可以处理0个或最多16384个。</p>
+</blockquote>
+<h3 id="四-压测方案及容灾方案"><a href="#四-压测方案及容灾方案" class="headerlink" title="四.压测方案及容灾方案"></a>四.压测方案及容灾方案</h3><h4 id="容灾方案"><a href="#容灾方案" class="headerlink" title="容灾方案"></a>容灾方案</h4><p>当设计一个中间间架构的时候把其独立起来，上游服务仅是调用，使中间件的扩展与维护对于服务来说是无感的，类似于laas服务。</p>
+<p>然而设计一个这样的中间间架构需要多层的服务。</p>
+<h5 id="接入层：LVS-DNS"><a href="#接入层：LVS-DNS" class="headerlink" title="接入层：LVS/DNS"></a>接入层：LVS/DNS</h5><ul>
+<li>基于NAT的LVS模式负载均衡</li>
+<li>基于TUN的LVS负载均衡</li>
+<li>基于DR的LVS负载均衡</li>
+</ul>
+<h5 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h5><p>可拆分为局部状态</p>
+<ul>
+<li>分号段分区，降低影响面</li>
+<li>备份部署，直接快速切换</li>
+<li>可实施有损服务等应用<br>优点：取决业务柔性及部署合理性，开发时间投入少。<br>缺点：部署不合理会导致灾难时损失倍增。</li>
+</ul>
+<h5 id="数据层"><a href="#数据层" class="headerlink" title="数据层"></a>数据层</h5><p>一致性强应用<br>优点；保障上层数据完整<br>缺点：技术实现复杂，然而使用的机器资源很大</p>
+<p>redis持久化的两种方式：</p>
+<ul>
+<li>RDB 指定时间间隔数据快照储存。</li>
+<li>AOF 记录服务器写操作。服务器重启时重新执行。（redis支持后台重写AOF，减少AOF文件大小）</li>
+</ul>
+<p>RDB持久化</p>
+<blockquote>
+<p>镜像全量持久化</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 主线程执行，会阻塞</span></span></span><br><span class="line">save</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">## 子程执行，redis默认配置</span></span></span><br><span class="line">bgsave</span><br></pre></td></tr></table></figure>
+<p>fork 使子进程同步父进程的共享数据块，当一个子进程fork时，别的子进程访问时会直接返回<br><img src="https://yycreate.github.io/img/image/redis/fork.png" alt="img.png"></p>
+<p>COW(copy on write)操作，子进程创建之后，父子进程共享数据段，父进程继续提供读写服务，将子进程脏写的数据清理<br><img src="https://yycreate.github.io/img/image/redis/cow.png" alt="img.png"></p>
+<ul>
+<li>执行 bgsave 命令，Redis 父进程判断当前是否存在正在执行的子进 程，如 RDB/AOF 子进程，如果存在bgsave命令直接返回。</li>
+<li>父进程执行 fork 操作创建子进程，fork 操作过程中父进程会阻塞，通 过 info stats 命令查看 latest_fork_usec 选项，可以获取最近一个 fork 操作的耗 时，单位为微秒。</li>
+<li>父进程fork完成后，bgsave 命令返回 “Background saving started” 信息 并不再阻塞父进程，可以继续响应其他命令。</li>
+<li>子进程创建 RDB 文件，根据父进程内存生成临时快照文件，完成后 对原有文件进行原子替换。执行lastsave命令可以获取最后一次生成 RDB 的 时间，对应 info 统计的 rdb_last_save_time 选项。</li>
+<li>进程发送信号给父进程表示完成，父进程更新统计信息，具体见 info Persistence下的 rdb_* 相关选项。</li>
+</ul>
+<p>AOF持久化</p>
+<blockquote>
+<p>增量持久化</p>
+</blockquote>
+<p><img src="../../img/image/redis/AOF.png" alt="AOF.png"></p>
+<ol>
+<li>所有的写入命令会追加到aof_buf(缓冲区)中。</li>
+<li>AOF缓冲区根据对应的策略向硬盘做同步操作。</li>
+<li>随着AOF文件越来越大，需要定期对AOF文件进行重写，达到压缩的目的。</li>
+<li>当Redis服务器重启时，可以加载AOF文件进行数据恢复。</li>
+</ol>
+<h4 id="容灾方案拓扑"><a href="#容灾方案拓扑" class="headerlink" title="容灾方案拓扑"></a>容灾方案拓扑</h4><p>整体的数据一致性架构，可见数据层要做实时备份需要大量的资源。<br><img src="https://yycreate.github.io/img/image/redis/whole.png" alt="img.png"></p>
+<p>redis中间件集群架构<br>主要场景：</p>
+<blockquote>
+<p>扩容/缩容: 集群模式部署<br><img src="https://yycreate.github.io/img/image/redis/kuo_suo.png" alt="img.png"></p>
+<p>切换</p>
+<p>数据迁移/快速迁移数据/减少迁移时影响面</p>
+</blockquote>
+<hr>
+<h4 id="压测方案"><a href="#压测方案" class="headerlink" title="压测方案"></a>压测方案</h4><h5 id="1-目标"><a href="#1-目标" class="headerlink" title="1.目标"></a>1.目标</h5><h5 id="2-资源选择，部署方案"><a href="#2-资源选择，部署方案" class="headerlink" title="2.资源选择，部署方案"></a>2.资源选择，部署方案</h5><h5 id="3-实际压测结果"><a href="#3-实际压测结果" class="headerlink" title="3.实际压测结果"></a>3.实际压测结果</h5><h4 id="容灾方案-1"><a href="#容灾方案-1" class="headerlink" title="容灾方案"></a>容灾方案</h4><ol>
+<li><p>集群架构部署及容灾</p>
+</li>
+<li><p>哨兵结构容灾方案</p>
+</li>
+</ol>
+<h3 id="五-数据迁移与备份"><a href="#五-数据迁移与备份" class="headerlink" title="五.数据迁移与备份"></a>五.数据迁移与备份</h3><p>// todo</p>
+<h3 id="六-版本特性"><a href="#六-版本特性" class="headerlink" title="六.版本特性"></a>六.版本特性</h3><p>// todo</p>
+<hr>
+<div align="center">
+
+<font color = orange>你的支持是我加班的动力</font>
+<br/>
+
+<strong>微信</strong>
+<br/>
+<img src="https://yycreate.github.io/img/wxzf.jpg" style="width:256px;"/>
+
+
+<strong>支付宝</strong>
+<br/>
+<img src="https://yycreate.github.io/img/zfbzf_1.jpg" style="width:256px;"/>
+
+</div>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/redis-redis-business/" data-toggle="tooltip" data-placement="top" title="redis 业务实现方案">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/server-DDD-area/" data-toggle="tooltip" data-placement="top" title="DDD领域模型">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        This is copyright.
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="/css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/music-player/utill.js"></script>
+
+
+<script src="/js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="/js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://blog.csdn.net/qq_34033770" target="_blank">my csdn blog</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/none">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://twitter.com/none">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/none">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/dusignr">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; eliooyang 2023 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dusign.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🍀&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
