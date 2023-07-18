@@ -9,14 +9,14 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/plan/plan.html</loc>
+    <loc>https://dusign.net/plan/okr.html</loc>
     
     <lastmod>2023-05-26T15:54:30.521Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://dusign.net/plan/okr.html</loc>
+    <loc>https://dusign.net/plan/plan.html</loc>
     
     <lastmod>2023-05-26T15:54:30.521Z</lastmod>
     
@@ -51,7 +51,7 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/vm-graal-VM/</loc>
+    <loc>https://dusign.net/vm-PRNG/</loc>
     
     <lastmod>2023-05-26T15:54:30.237Z</lastmod>
     
@@ -65,7 +65,7 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/vm-PRNG/</loc>
+    <loc>https://dusign.net/vm-graal-VM/</loc>
     
     <lastmod>2023-05-26T15:54:30.237Z</lastmod>
     
@@ -100,14 +100,14 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/server-DDD-area/</loc>
+    <loc>https://dusign.net/redis-redis-main/</loc>
     
     <lastmod>2023-05-26T15:54:30.235Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://dusign.net/redis-redis-main/</loc>
+    <loc>https://dusign.net/server-DDD-area/</loc>
     
     <lastmod>2023-05-26T15:54:30.235Z</lastmod>
     
@@ -121,14 +121,14 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/protocol-tcp/</loc>
+    <loc>https://dusign.net/nosql-mongo/</loc>
     
     <lastmod>2023-05-26T15:54:30.234Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://dusign.net/nosql-mongo/</loc>
+    <loc>https://dusign.net/protocol-tcp/</loc>
     
     <lastmod>2023-05-26T15:54:30.234Z</lastmod>
     
@@ -149,14 +149,14 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/mysql-mysql-explain-plan/</loc>
+    <loc>https://dusign.net/mysql-myql-excel-sql/</loc>
     
     <lastmod>2023-05-26T15:54:30.232Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://dusign.net/mysql-myql-excel-sql/</loc>
+    <loc>https://dusign.net/mysql-mysql-explain-plan/</loc>
     
     <lastmod>2023-05-26T15:54:30.232Z</lastmod>
     

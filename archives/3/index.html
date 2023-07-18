@@ -197,12 +197,12 @@
                     
 
                         
+                    
+
+                        
                         <li>
                             <a href="/tags/">Tags</a>
                         </li>
-                        
-                    
-
                         
                     
                     
@@ -434,6 +434,45 @@ Topic：消息的主题，可以理解为消息的分类，kafka的数据......
 
         <div class="post-preview">
 
+            <a href="/es-es-set/">
+                <h2 class="post-title">
+                    es部署方式
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    1.集群 cluster
+集群部署拓扑图副分片的数量可以设置的，一个Primary shard可以对应多个Replica shard
+将所有数据主分片分到多个节点node中，将副分片保存在不同的节点中 （主要避免某个节点不可用时，其他节点可以提供数据使用或恢复）
+
+集群状态颜色
+绿色
+黄色
+红色
+
+单点故障转移当只有一个节点的时候，副本RS是不会生效的，表示节点宕机时候，数据还是不可用，不会......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by eliooyang on
+                    2023-05-26
+                </p>
+                <div class="tags">
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
             <a href="/error-error/">
                 <h2 class="post-title">
                     容灾
@@ -462,45 +501,6 @@ manager多-&gt;zookeeper选主-&gt;MGR跨机房容灾
 
 3个副本，挂了，一个还需要备份
 断网......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by eliooyang on
-                    2023-05-26
-                </p>
-                <div class="tags">
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/es-es-set/">
-                <h2 class="post-title">
-                    es部署方式
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    1.集群 cluster
-集群部署拓扑图副分片的数量可以设置的，一个Primary shard可以对应多个Replica shard
-将所有数据主分片分到多个节点node中，将副分片保存在不同的节点中 （主要避免某个节点不可用时，其他节点可以提供数据使用或恢复）
-
-集群状态颜色
-绿色
-黄色
-红色
-
-单点故障转移当只有一个节点的时候，副本RS是不会生效的，表示节点宕机时候，数据还是不可用，不会......
                 </div>
             </a>
             
@@ -747,7 +747,7 @@ Hexo-theme-snail is a succinct hexo theme. It has two colors, light and star, th
         </li>
       
         <li>
-          <a href="/vm-graal-VM/">graal vm</a>
+          <a href="/vm-PRNG/">vm-PRNG</a>
         </li>
       
         <li>
@@ -755,7 +755,7 @@ Hexo-theme-snail is a succinct hexo theme. It has two colors, light and star, th
         </li>
       
         <li>
-          <a href="/vm-PRNG/">vm-PRNG</a>
+          <a href="/vm-graal-VM/">graal vm</a>
         </li>
       
     </ul>
@@ -989,7 +989,7 @@ Hexo-theme-snail is a succinct hexo theme. It has two colors, light and star, th
         
 
         
-            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🍀&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&#34;🌱&#34;,&#34;just do it&#34;,&#34;🍀&#34;]' color='[&#34;rgb(121,93,179)&#34; ,&#34;rgb(76,180,231)&#34; ,&#34;rgb(184,90,154)&#34;]'></script>
         
 
         <!-- background effects end -->
@@ -999,21 +999,6 @@ Hexo-theme-snail is a succinct hexo theme. It has two colors, light and star, th
     
         <script src="/js/ribbonDynamic.js"></script>
     
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>
