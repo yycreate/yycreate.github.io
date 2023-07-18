@@ -16,14 +16,14 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/plan/plan.html</loc>
+    <loc>https://dusign.net/plan/plan2.html</loc>
     
     <lastmod>2023-05-26T15:54:30.521Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://dusign.net/plan/plan2.html</loc>
+    <loc>https://dusign.net/plan/plan.html</loc>
     
     <lastmod>2023-05-26T15:54:30.521Z</lastmod>
     
@@ -86,13 +86,6 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/redis-redis-business/</loc>
-    
-    <lastmod>2023-05-26T15:54:30.235Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://dusign.net/redis-redis-point/</loc>
     
     <lastmod>2023-05-26T15:54:30.235Z</lastmod>
@@ -114,6 +107,13 @@
   </url>
   
   <url>
+    <loc>https://dusign.net/redis-redis-business/</loc>
+    
+    <lastmod>2023-05-26T15:54:30.235Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://dusign.net/server-availablity/</loc>
     
     <lastmod>2023-05-26T15:54:30.235Z</lastmod>
@@ -121,14 +121,14 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/nosql-mongo/</loc>
+    <loc>https://dusign.net/protocol-tcp/</loc>
     
     <lastmod>2023-05-26T15:54:30.234Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://dusign.net/protocol-tcp/</loc>
+    <loc>https://dusign.net/nosql-mongo/</loc>
     
     <lastmod>2023-05-26T15:54:30.234Z</lastmod>
     
@@ -149,14 +149,14 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/mysql-myql-excel-sql/</loc>
+    <loc>https://dusign.net/mysql-mysql-explain-plan/</loc>
     
     <lastmod>2023-05-26T15:54:30.232Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://dusign.net/mysql-mysql-explain-plan/</loc>
+    <loc>https://dusign.net/mysql-myql-excel-sql/</loc>
     
     <lastmod>2023-05-26T15:54:30.232Z</lastmod>
     
@@ -170,14 +170,14 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/mq-rabbitmq/</loc>
+    <loc>https://dusign.net/mq-kafka/</loc>
     
     <lastmod>2023-05-26T15:54:30.231Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://dusign.net/mq-kafka/</loc>
+    <loc>https://dusign.net/mq-rabbitmq/</loc>
     
     <lastmod>2023-05-26T15:54:30.231Z</lastmod>
     
@@ -219,14 +219,14 @@
   </url>
   
   <url>
-    <loc>https://dusign.net/archive/index.html</loc>
+    <loc>https://dusign.net/about/index.html</loc>
     
     <lastmod>2023-05-26T15:52:20.998Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://dusign.net/about/index.html</loc>
+    <loc>https://dusign.net/archive/index.html</loc>
     
     <lastmod>2023-05-26T15:52:20.998Z</lastmod>
     
