@@ -164,14 +164,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -197,12 +197,12 @@
                     
 
                         
-                    
-
-                        
                         <li>
                             <a href="/tags/">Tags</a>
                         </li>
+                        
+                    
+
                         
                     
                     
@@ -407,16 +407,17 @@ jdk17商用协议
 
         <div class="post-preview">
 
-            <a href="/vm-PRNG/">
+            <a href="/vm-graal-VM/">
                 <h2 class="post-title">
-                    vm-PRNG
+                    graal vm
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    PRNG算法
-123456Xn+1 = (aXn + c) mod mwhere X is the sequence of pseudo-random valuesm, 0 &lt; m  - modulus a, 0 &lt; a &lt; m  - multiplierc, 0 ≤ c &lt; m  - incrementx0, 0 ≤ x0 &lt; m  - the seed or......
+                    官网
+一.共识在JVM的hotspot实现上增强的的全栈型虚拟机。虚拟机支持原本Java虚拟机上的Java、Scala、Groovy、Kotlin还支持基于LLVM的C、C++、Rust还支持其他像JavaScript、Ruby、Python和R语言可以无额外开销地混合使用这些编程语言，支持不同语言中混用对方的接口和对象。
+二. 安装开发环境云上环境 ...
                 </div>
             </a>
             
@@ -475,17 +476,16 @@ G1垃圾回收器的主......
 
         <div class="post-preview">
 
-            <a href="/vm-graal-VM/">
+            <a href="/vm-PRNG/">
                 <h2 class="post-title">
-                    graal vm
+                    vm-PRNG
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    官网
-一.共识在JVM的hotspot实现上增强的的全栈型虚拟机。虚拟机支持原本Java虚拟机上的Java、Scala、Groovy、Kotlin还支持基于LLVM的C、C++、Rust还支持其他像JavaScript、Ruby、Python和R语言可以无额外开销地混合使用这些编程语言，支持不同语言中混用对方的接口和对象。
-二. 安装开发环境云上环境 ...
+                    PRNG算法
+123456Xn+1 = (aXn + c) mod mwhere X is the sequence of pseudo-random valuesm, 0 &lt; m  - modulus a, 0 &lt; a &lt; m  - multiplierc, 0 ≤ c &lt; m  - incrementx0, 0 ≤ x0 &lt; m  - the seed or......
                 </div>
             </a>
             
@@ -599,54 +599,6 @@ G1垃圾回收器的主......
 
         <div class="post-preview">
 
-            <a href="/redis-redis-main/">
-                <h2 class="post-title">
-                    redis整理场景以及使用
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    
-0.共识
-1.redis部署架构
-2.适用场景
-3.实际问题及其解决方案
-4.压测方案及容灾方案
-5.数据迁移与备份
-
-零.共识查询组件单线程，链接多路复用，有事务提交，但不能回滚。
-一.redis部署架构
-1.单机架构忽略吧 单机架构有相当多问题
-
-1.单点问题
-2.多路复用
-3.
-
-2.哨兵架构在部署redis的同时也需要部署哨兵，哨兵主要功能分为：
-
-监控redis主从节点的运行状况......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by eliooyang on
-                    2023-05-26
-                </p>
-                <div class="tags">
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
             <a href="/redis-redis-business/">
                 <h2 class="post-title">
                     redis 业务实现方案
@@ -689,6 +641,45 @@ G1垃圾回收器的主......
                     该篇不会写redis的基础使用，而是根据redis的特性去挖掘一下原理，并深入理解
 redis 淘汰策略redis 内存访问流程https://www.jianshu.com/p/2ce36bca2869
 redis 数据同步流程...
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by eliooyang on
+                    2023-05-26
+                </p>
+                <div class="tags">
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/server-DDD-area/">
+                <h2 class="post-title">
+                    DDD领域模型
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    注： 这是很抽象的概念，尽量举例，让概念更好理解。
+1. 聚合根，聚合
+定义：聚合是用来定义领域所有权和边界的。
+
+实体
+定义：一个由它的标识定义的对象叫做实体；具有唯一标识性和可变性；它是具有业务逻辑；对应现实世界一个具体的业务对象。
+
+简而言之，就是把多个相关的值与对象整体堪称一个域，简化整体的关系。
+2. 领域，子域
+领域即问题域，通常是根据一个组织所处的行业进行识别，它基于业务的愿景......
                 </div>
             </a>
             
@@ -868,7 +859,7 @@ redis 数据同步流程...
         </li>
       
         <li>
-          <a href="/vm-PRNG/">vm-PRNG</a>
+          <a href="/vm-graal-VM/">graal vm</a>
         </li>
       
         <li>
@@ -876,7 +867,7 @@ redis 数据同步流程...
         </li>
       
         <li>
-          <a href="/vm-graal-VM/">graal vm</a>
+          <a href="/vm-PRNG/">vm-PRNG</a>
         </li>
       
     </ul>

@@ -164,14 +164,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -197,12 +197,12 @@
                     
 
                         
-                    
-
-                        
                         <li>
                             <a href="/tags/">Tags</a>
                         </li>
+                        
+                    
+
                         
                     
                     
@@ -326,24 +326,33 @@
 
         <div class="post-preview">
 
-            <a href="/server-DDD-area/">
+            <a href="/redis-redis-main/">
                 <h2 class="post-title">
-                    DDD领域模型
+                    redis整理场景以及使用
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    注： 这是很抽象的概念，尽量举例，让概念更好理解。
-1. 聚合根，聚合
-定义：聚合是用来定义领域所有权和边界的。
+                    
+0.共识
+1.redis部署架构
+2.适用场景
+3.实际问题及其解决方案
+4.压测方案及容灾方案
+5.数据迁移与备份
 
-实体
-定义：一个由它的标识定义的对象叫做实体；具有唯一标识性和可变性；它是具有业务逻辑；对应现实世界一个具体的业务对象。
+零.共识查询组件单线程，链接多路复用，有事务提交，但不能回滚。
+一.redis部署架构
+1.单机架构忽略吧 单机架构有相当多问题
 
-简而言之，就是把多个相关的值与对象整体堪称一个域，简化整体的关系。
-2. 领域，子域
-领域即问题域，通常是根据一个组织所处的行业进行识别，它基于业务的愿景......
+1.单点问题
+2.多路复用
+3.
+
+2.哨兵架构在部署redis的同时也需要部署哨兵，哨兵主要功能分为：
+
+监控redis主从节点的运行状况......
                 </div>
             </a>
             
@@ -395,20 +404,18 @@
 
         <div class="post-preview">
 
-            <a href="/nosql-mongo/">
+            <a href="/protocol-tcp/">
                 <h2 class="post-title">
-                    nosql-mongo
+                    protocol-tcp
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
                     
-title: mongodb1.NO SCHEMA
-mongodb是文档型数据库，文档结构是BSON（binary serialized document format）的类JSON二进制存储格式。
-支持添加字段，还支持date和BinData数据类型，给予NO SCHEMA和SCHEMA FREE的特性。
+tcp 黏包/沾包
 
-2.mongodb复制集群复制集群保证mongodb数据的高可用。将数据复制到多......
+...
                 </div>
             </a>
             
@@ -430,18 +437,20 @@ mongodb是文档型数据库，文档结构是BSON（binary serialized document 
 
         <div class="post-preview">
 
-            <a href="/protocol-tcp/">
+            <a href="/nosql-mongo/">
                 <h2 class="post-title">
-                    protocol-tcp
+                    nosql-mongo
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
                     
-tcp 黏包/沾包
+title: mongodb1.NO SCHEMA
+mongodb是文档型数据库，文档结构是BSON（binary serialized document format）的类JSON二进制存储格式。
+支持添加字段，还支持date和BinData数据类型，给予NO SCHEMA和SCHEMA FREE的特性。
 
-...
+2.mongodb复制集群复制集群保证mongodb数据的高可用。将数据复制到多......
                 </div>
             </a>
             
@@ -526,15 +535,22 @@ tcp 黏包/沾包
 
         <div class="post-preview">
 
-            <a href="/mysql-myql-excel-sql/">
+            <a href="/mysql-mysql-explain-plan/">
                 <h2 class="post-title">
-                    SQL语句是如何执行的
+                    mysql 执行计划
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    mysql 结构执行excel的流程...
+                    执行语句语法EXPLAIN/DESC SQL语句
+1explain
+执行计划参数详解1.执行计划参数select_type查询类型
+- SIMPLE：简单查询
+- PRIMARY：复杂查询中最外层的 select
+- SUBQUERY：包含在 select 中的子查询（不在 from 子句中）
+- DERIVED：包含在 from 子句中的子查询（会将结果存放在一个临时表中，也称为派生表）
+......
                 </div>
             </a>
             
@@ -556,22 +572,15 @@ tcp 黏包/沾包
 
         <div class="post-preview">
 
-            <a href="/mysql-mysql-explain-plan/">
+            <a href="/mysql-myql-excel-sql/">
                 <h2 class="post-title">
-                    mysql 执行计划
+                    SQL语句是如何执行的
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    执行语句语法EXPLAIN/DESC SQL语句
-1explain
-执行计划参数详解1.执行计划参数select_type查询类型
-- SIMPLE：简单查询
-- PRIMARY：复杂查询中最外层的 select
-- SUBQUERY：包含在 select 中的子查询（不在 from 子句中）
-- DERIVED：包含在 from 子句中的子查询（会将结果存放在一个临时表中，也称为派生表）
-......
+                    mysql 结构执行excel的流程...
                 </div>
             </a>
             
@@ -636,19 +645,27 @@ tcp 黏包/沾包
 
         <div class="post-preview">
 
-            <a href="/mq-kafka/">
+            <a href="/mq-rabbitmq/">
                 <h2 class="post-title">
-                    kafka
+                    rabbit架构
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    kafka逻辑架构
+                    单机架构
+主要包含角色:
 
-Producer：Producer即生产者，消息的产生者，是消息的入口。
-Broker：Broker是kafka实例，每个服务器上有一个或多个kafka的实例，我们姑且认为每个broker对应一台服务器。每个kafka集群内的broker都有一个不重复的编号，如图中的broker-0、broker-1等……
-Topic：消息的主题，可以理解为消息的分类，kafka的数据......
+producer: 生产者
+comsumer: 消费者
+msg: 消息
+exchange： 交换机可以理解为路由规则 有dierct，fanout，topic，headers
+queue: 队列，存储消息
+channel： 虚拟通道，发送/接收消息都是通过这
+connection： 与mq的tcp链接
+Broker:简单来说，就是一个消息队列服务器实体。
+
+多机架......
                 </div>
             </a>
             
@@ -832,7 +849,7 @@ Topic：消息的主题，可以理解为消息的分类，kafka的数据......
         </li>
       
         <li>
-          <a href="/vm-PRNG/">vm-PRNG</a>
+          <a href="/vm-graal-VM/">graal vm</a>
         </li>
       
         <li>
@@ -840,7 +857,7 @@ Topic：消息的主题，可以理解为消息的分类，kafka的数据......
         </li>
       
         <li>
-          <a href="/vm-graal-VM/">graal vm</a>
+          <a href="/vm-PRNG/">vm-PRNG</a>
         </li>
       
     </ul>

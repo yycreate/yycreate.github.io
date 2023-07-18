@@ -13,7 +13,7 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/vm-PRNG/</loc>
+    <loc>https://dusign.net/vm-graal-VM/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -21,7 +21,7 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/vm-graal-VM/</loc>
+    <loc>https://dusign.net/vm-PRNG/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -30,10 +30,6 @@
   </url>
   <url>
     <loc>https://dusign.net/service-gen-id/</loc>
-    <lastmod>2023-05-26</lastmod>
-  </url>
-  <url>
-    <loc>https://dusign.net/redis-redis-main/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -49,15 +45,19 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
+    <loc>https://dusign.net/redis-redis-main/</loc>
+    <lastmod>2023-05-26</lastmod>
+  </url>
+  <url>
     <loc>https://dusign.net/server-availablity/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/nosql-mongo/</loc>
+    <loc>https://dusign.net/protocol-tcp/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/protocol-tcp/</loc>
+    <loc>https://dusign.net/nosql-mongo/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -69,11 +69,11 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/mysql-myql-excel-sql/</loc>
+    <loc>https://dusign.net/mysql-mysql-explain-plan/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/mysql-mysql-explain-plan/</loc>
+    <loc>https://dusign.net/mysql-myql-excel-sql/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -81,11 +81,11 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/mq-kafka/</loc>
+    <loc>https://dusign.net/mq-rabbitmq/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/mq-rabbitmq/</loc>
+    <loc>https://dusign.net/mq-kafka/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
