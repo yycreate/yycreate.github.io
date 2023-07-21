@@ -164,14 +164,14 @@
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -180,9 +180,6 @@
                         <li>
                             <a href="/categories/">Categories</a>
                         </li>
-                        
-                    
-
                         
                     
 
@@ -197,12 +194,15 @@
                     
 
                         
-                        <li>
-                            <a href="/tags/">Tags</a>
-                        </li>
+                    
+
                         
                     
 
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
                         
                     
                     
@@ -326,37 +326,6 @@
 
         <div class="post-preview">
 
-            <a href="/redis-redis-business/">
-                <h2 class="post-title">
-                    redis 业务实现方案
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    业务有序消费方案
-...
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by eliooyang on
-                    2023-05-26
-                </p>
-                <div class="tags">
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
             <a href="/server-availablity/">
                 <h2 class="post-title">
                     高并发架构设计经验
@@ -387,17 +356,15 @@
 
         <div class="post-preview">
 
-            <a href="/protocol-tcp/">
+            <a href="/redis-redis-business/">
                 <h2 class="post-title">
-                    protocol-tcp
+                    redis 业务实现方案
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    
-tcp 黏包/沾包
-
+                    业务有序消费方案
 ...
                 </div>
             </a>
@@ -434,6 +401,39 @@ mongodb是文档型数据库，文档结构是BSON（binary serialized document 
 支持添加字段，还支持date和BinData数据类型，给予NO SCHEMA和SCHEMA FREE的特性。
 
 2.mongodb复制集群复制集群保证mongodb数据的高可用。将数据复制到多......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by eliooyang on
+                    2023-05-26
+                </p>
+                <div class="tags">
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/protocol-tcp/">
+                <h2 class="post-title">
+                    protocol-tcp
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    
+tcp 黏包/沾包
+
+...
                 </div>
             </a>
             
@@ -518,22 +518,15 @@ mongodb是文档型数据库，文档结构是BSON（binary serialized document 
 
         <div class="post-preview">
 
-            <a href="/mysql-mysql-explain-plan/">
+            <a href="/mysql-myql-excel-sql/">
                 <h2 class="post-title">
-                    mysql 执行计划
+                    SQL语句是如何执行的
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    执行语句语法EXPLAIN/DESC SQL语句
-1explain
-执行计划参数详解1.执行计划参数select_type查询类型
-- SIMPLE：简单查询
-- PRIMARY：复杂查询中最外层的 select
-- SUBQUERY：包含在 select 中的子查询（不在 from 子句中）
-- DERIVED：包含在 from 子句中的子查询（会将结果存放在一个临时表中，也称为派生表）
-......
+                    mysql 结构执行excel的流程...
                 </div>
             </a>
             
@@ -555,15 +548,22 @@ mongodb是文档型数据库，文档结构是BSON（binary serialized document 
 
         <div class="post-preview">
 
-            <a href="/mysql-myql-excel-sql/">
+            <a href="/mysql-mysql-explain-plan/">
                 <h2 class="post-title">
-                    SQL语句是如何执行的
+                    mysql 执行计划
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    mysql 结构执行excel的流程...
+                    执行语句语法EXPLAIN/DESC SQL语句
+1explain
+执行计划参数详解1.执行计划参数select_type查询类型
+- SIMPLE：简单查询
+- PRIMARY：复杂查询中最外层的 select
+- SUBQUERY：包含在 select 中的子查询（不在 from 子句中）
+- DERIVED：包含在 from 子句中的子查询（会将结果存放在一个临时表中，也称为派生表）
+......
                 </div>
             </a>
             
@@ -628,19 +628,27 @@ mongodb是文档型数据库，文档结构是BSON（binary serialized document 
 
         <div class="post-preview">
 
-            <a href="/mq-kafka/">
+            <a href="/mq-rabbitmq/">
                 <h2 class="post-title">
-                    kafka
+                    rabbit架构
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    kafka逻辑架构
+                    单机架构
+主要包含角色:
 
-Producer：Producer即生产者，消息的产生者，是消息的入口。
-Broker：Broker是kafka实例，每个服务器上有一个或多个kafka的实例，我们姑且认为每个broker对应一台服务器。每个kafka集群内的broker都有一个不重复的编号，如图中的broker-0、broker-1等……
-Topic：消息的主题，可以理解为消息的分类，kafka的数据......
+producer: 生产者
+comsumer: 消费者
+msg: 消息
+exchange： 交换机可以理解为路由规则 有dierct，fanout，topic，headers
+queue: 队列，存储消息
+channel： 虚拟通道，发送/接收消息都是通过这
+connection： 与mq的tcp链接
+Broker:简单来说，就是一个消息队列服务器实体。
+
+多机架......
                 </div>
             </a>
             
@@ -824,15 +832,15 @@ Topic：消息的主题，可以理解为消息的分类，kafka的数据......
         </li>
       
         <li>
+          <a href="/vm-graal-VM/">graal vm</a>
+        </li>
+      
+        <li>
           <a href="/vm-PRNG/">vm-PRNG</a>
         </li>
       
         <li>
           <a href="/vm-g1-zgc/">G1 与 ZGC 的全过程解析</a>
-        </li>
-      
-        <li>
-          <a href="/vm-graal-VM/">graal vm</a>
         </li>
       
     </ul>
