@@ -164,7 +164,7 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/categories/">Categories</a>
                         </li>
                         
                     
@@ -178,7 +178,7 @@
 
                         
                         <li>
-                            <a href="/categories/">Categories</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -360,49 +360,6 @@ Topic：消息的主题，可以理解为消息的分类，kafka的数据......
 
         <div class="post-preview">
 
-            <a href="/es-es-work-place/">
-                <h2 class="post-title">
-                    elasticsearch实际应用场景与扩展方案，容灾方案
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    浅显概括一下es的能力：分词能力，倒排索引，聚合计算能力。
-能力示意图
-实际应用场景稍微了解一下elasticsearch生态
-
-1.实时日志分析主要运用场景：用户行为的业务日志（埋点），运营日志（系统的慢性能的接口）等等
-
-通常这种场景使用elk/efk完成：
-
-扩容：
-2.搜索服务
-微服务小程序内容索引架构，可以基于不同业务将数据拆分为多个子库做业务隔离。
-适用业务例如：feed流
-
-3......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by eliooyang on
-                    2023-05-26
-                </p>
-                <div class="tags">
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
             <a href="/k8s-pod-setting/">
                 <h2 class="post-title">
                     pod 配置demo
@@ -434,24 +391,28 @@ Topic：消息的主题，可以理解为消息的分类，kafka的数据......
 
         <div class="post-preview">
 
-            <a href="/es-es-set/">
+            <a href="/es-es-work-place/">
                 <h2 class="post-title">
-                    es部署方式
+                    elasticsearch实际应用场景与扩展方案，容灾方案
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    1.集群 cluster
-集群部署拓扑图副分片的数量可以设置的，一个Primary shard可以对应多个Replica shard
-将所有数据主分片分到多个节点node中，将副分片保存在不同的节点中 （主要避免某个节点不可用时，其他节点可以提供数据使用或恢复）
+                    浅显概括一下es的能力：分词能力，倒排索引，聚合计算能力。
+能力示意图
+实际应用场景稍微了解一下elasticsearch生态
 
-集群状态颜色
-绿色
-黄色
-红色
+1.实时日志分析主要运用场景：用户行为的业务日志（埋点），运营日志（系统的慢性能的接口）等等
 
-单点故障转移当只有一个节点的时候，副本RS是不会生效的，表示节点宕机时候，数据还是不可用，不会......
+通常这种场景使用elk/efk完成：
+
+扩容：
+2.搜索服务
+微服务小程序内容索引架构，可以基于不同业务将数据拆分为多个子库做业务隔离。
+适用业务例如：feed流
+
+3......
                 </div>
             </a>
             
@@ -501,6 +462,45 @@ manager多-&gt;zookeeper选主-&gt;MGR跨机房容灾
 
 3个副本，挂了，一个还需要备份
 断网......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by eliooyang on
+                    2023-05-26
+                </p>
+                <div class="tags">
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/es-es-set/">
+                <h2 class="post-title">
+                    es部署方式
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    1.集群 cluster
+集群部署拓扑图副分片的数量可以设置的，一个Primary shard可以对应多个Replica shard
+将所有数据主分片分到多个节点node中，将副分片保存在不同的节点中 （主要避免某个节点不可用时，其他节点可以提供数据使用或恢复）
+
+集群状态颜色
+绿色
+黄色
+红色
+
+单点故障转移当只有一个节点的时候，副本RS是不会生效的，表示节点宕机时候，数据还是不可用，不会......
                 </div>
             </a>
             

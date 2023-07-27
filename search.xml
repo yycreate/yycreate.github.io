@@ -121,6 +121,19 @@
     
     
     <entry>
+      <title>redis 业务实现方案</title>
+      <link href="/redis-redis-business/"/>
+      <url>/redis-redis-business/</url>
+      
+        <content type="html"><![CDATA[<h5 id="业务有序消费方案"><a href="#业务有序消费方案" class="headerlink" title="业务有序消费方案"></a>业务有序消费方案</h5><p><img src="../../img/image/redis/redis_zk.png" alt="redis_zk.png"></p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>DDD领域模型</title>
       <link href="/server-DDD-area/"/>
       <url>/server-DDD-area/</url>
@@ -147,37 +160,11 @@
     
     
     <entry>
-      <title>redis 业务实现方案</title>
-      <link href="/redis-redis-business/"/>
-      <url>/redis-redis-business/</url>
-      
-        <content type="html"><![CDATA[<h5 id="业务有序消费方案"><a href="#业务有序消费方案" class="headerlink" title="业务有序消费方案"></a>业务有序消费方案</h5><p><img src="../../img/image/redis/redis_zk.png" alt="redis_zk.png"></p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>nosql-mongo</title>
       <link href="/nosql-mongo/"/>
       <url>/nosql-mongo/</url>
       
         <content type="html"><![CDATA[<hr><h2 id="title-mongodb"><a href="#title-mongodb" class="headerlink" title="title: mongodb"></a>title: mongodb</h2><h3 id="1-NO-SCHEMA"><a href="#1-NO-SCHEMA" class="headerlink" title="1.NO SCHEMA"></a>1.NO SCHEMA</h3><blockquote><p>mongodb是文档型数据库，文档结构是BSON（binary serialized document format）的类JSON二进制存储格式。</p><p>支持添加字段，还支持date和BinData数据类型，给予NO SCHEMA和SCHEMA FREE的特性。</p></blockquote><h3 id="2-mongodb复制集群"><a href="#2-mongodb复制集群" class="headerlink" title="2.mongodb复制集群"></a>2.mongodb复制集群</h3><p>复制集群保证mongodb数据的高可用。将数据复制到多台机器上，避免单点故障。</p><blockquote><p>复制集群的角色：</p><ol><li>有且仅有一个主节点（Primary）:集群的写操作入口，主节点挂掉会重新选取一个主节点。</li><li>一个或者多个从节点（Secondary）:一般2个或以上，从主节点同步数据，主节点挂掉可被选举为主节点。</li><li>零个或者一个仲裁节点（Arbiter）:为了节约资源或多机房容灾用，负责主节点的选举时投票，不存数据（保证节点多票通过选举）。 </li></ol><p>三节点复制集群一般使用PSS或者PSA结构。</p></blockquote><p>复制集群保持数据一致性的设计：</p><p>Journal日志：</p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>protocol-tcp</title>
-      <link href="/protocol-tcp/"/>
-      <url>/protocol-tcp/</url>
-      
-        <content type="html"><![CDATA[<ul><li>tcp 黏包/沾包</li></ul>]]></content>
       
       
       
@@ -199,6 +186,19 @@
     
     
     <entry>
+      <title>protocol-tcp</title>
+      <link href="/protocol-tcp/"/>
+      <url>/protocol-tcp/</url>
+      
+        <content type="html"><![CDATA[<ul><li>tcp 黏包/沾包</li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>mysql 优化方案</title>
       <link href="/mysql-transition-level/"/>
       <url>/mysql-transition-level/</url>
@@ -212,11 +212,11 @@
     
     
     <entry>
-      <title>SQL语句是如何执行的</title>
-      <link href="/mysql-myql-excel-sql/"/>
-      <url>/mysql-myql-excel-sql/</url>
+      <title>mysql 执行计划</title>
+      <link href="/mysql-mysql-explain-plan/"/>
+      <url>/mysql-mysql-explain-plan/</url>
       
-        <content type="html"><![CDATA[<h3 id="mysql-结构"><a href="#mysql-结构" class="headerlink" title="mysql 结构"></a>mysql 结构</h3><h3 id="执行excel的流程"><a href="#执行excel的流程" class="headerlink" title="执行excel的流程"></a>执行excel的流程</h3>]]></content>
+        <content type="html"><![CDATA[<h3 id="执行语句语法"><a href="#执行语句语法" class="headerlink" title="执行语句语法"></a>执行语句语法</h3><p>EXPLAIN/DESC SQL语句</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">explain</span></span><br></pre></td></tr></table></figure><h3 id="执行计划参数详解"><a href="#执行计划参数详解" class="headerlink" title="执行计划参数详解"></a>执行计划参数详解</h3><h4 id="1-执行计划参数"><a href="#1-执行计划参数" class="headerlink" title="1.执行计划参数"></a>1.执行计划参数</h4><font  color=#329999>select_type查询类型</font>- SIMPLE：简单查询- PRIMARY：复杂查询中最外层的 select- SUBQUERY：包含在 select 中的子查询（不在 from 子句中）- DERIVED：包含在 from 子句中的子查询（会将结果存放在一个临时表中，也称为派生表）- UNION：第二个select中查询UNION,则被标记为UNION，如果UNION出现在from子查询中，最外层被标记为DERIVED- UNION RESULT：从UNION表获取结果的select<font  color=#329999>type-访问类型</font><blockquote><p>type代表访问类型，是判断sql执行性能比较关键的一个字段，性能从高到低依次是：</p><p>system &gt; const &gt; eq_ref &gt; ref &gt; fulltext &gt; ref_or_null &gt; index_merge &gt; unique_subquery &gt; index_subquery &gt; range &gt; index &gt; ALL</p></blockquote><ul><li>system：表示只有一条数据，类似于系统表，是const的一种特例</li><li>const：表示通过索引一次就查询到数据，比较块，用于primary key（主键）和unique唯一索引</li><li>eq_ref：用于“=”运算符比较的索引列</li><li>ref：非唯一索引扫描</li><li>rang：检索给的范围的值，使用一个索引进行选择，where后面使用between、&gt;、&lt;、in等</li><li>index：当前查询的结果全部为索引列，虽然也是全部扫描，但是只查询索引数据，没有之间查询数据</li><li>all：遍历全部查询</li></ul>]]></content>
       
       
       
@@ -225,11 +225,11 @@
     
     
     <entry>
-      <title>mysql 执行计划</title>
-      <link href="/mysql-mysql-explain-plan/"/>
-      <url>/mysql-mysql-explain-plan/</url>
+      <title>SQL语句是如何执行的</title>
+      <link href="/mysql-myql-excel-sql/"/>
+      <url>/mysql-myql-excel-sql/</url>
       
-        <content type="html"><![CDATA[<h3 id="执行语句语法"><a href="#执行语句语法" class="headerlink" title="执行语句语法"></a>执行语句语法</h3><p>EXPLAIN/DESC SQL语句</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">explain</span></span><br></pre></td></tr></table></figure><h3 id="执行计划参数详解"><a href="#执行计划参数详解" class="headerlink" title="执行计划参数详解"></a>执行计划参数详解</h3><h4 id="1-执行计划参数"><a href="#1-执行计划参数" class="headerlink" title="1.执行计划参数"></a>1.执行计划参数</h4><font  color=#329999>select_type查询类型</font>- SIMPLE：简单查询- PRIMARY：复杂查询中最外层的 select- SUBQUERY：包含在 select 中的子查询（不在 from 子句中）- DERIVED：包含在 from 子句中的子查询（会将结果存放在一个临时表中，也称为派生表）- UNION：第二个select中查询UNION,则被标记为UNION，如果UNION出现在from子查询中，最外层被标记为DERIVED- UNION RESULT：从UNION表获取结果的select<font  color=#329999>type-访问类型</font><blockquote><p>type代表访问类型，是判断sql执行性能比较关键的一个字段，性能从高到低依次是：</p><p>system &gt; const &gt; eq_ref &gt; ref &gt; fulltext &gt; ref_or_null &gt; index_merge &gt; unique_subquery &gt; index_subquery &gt; range &gt; index &gt; ALL</p></blockquote><ul><li>system：表示只有一条数据，类似于系统表，是const的一种特例</li><li>const：表示通过索引一次就查询到数据，比较块，用于primary key（主键）和unique唯一索引</li><li>eq_ref：用于“=”运算符比较的索引列</li><li>ref：非唯一索引扫描</li><li>rang：检索给的范围的值，使用一个索引进行选择，where后面使用between、&gt;、&lt;、in等</li><li>index：当前查询的结果全部为索引列，虽然也是全部扫描，但是只查询索引数据，没有之间查询数据</li><li>all：遍历全部查询</li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="mysql-结构"><a href="#mysql-结构" class="headerlink" title="mysql 结构"></a>mysql 结构</h3><h3 id="执行excel的流程"><a href="#执行excel的流程" class="headerlink" title="执行excel的流程"></a>执行excel的流程</h3>]]></content>
       
       
       
@@ -277,19 +277,6 @@
     
     
     <entry>
-      <title>elasticsearch实际应用场景与扩展方案，容灾方案</title>
-      <link href="/es-es-work-place/"/>
-      <url>/es-es-work-place/</url>
-      
-        <content type="html"><![CDATA[<p>浅显概括一下es的能力：分词能力，倒排索引，聚合计算能力。</p><p>能力示意图</p><h3 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h3><p>稍微了解一下elasticsearch生态</p><p><img src="https://yycreate.github.io/img/es/es_env.png" alt="es_env.png"></p><h4 id="1-实时日志分析"><a href="#1-实时日志分析" class="headerlink" title="1.实时日志分析"></a>1.实时日志分析</h4><p>主要运用场景：用户行为的业务日志（埋点），运营日志（系统的慢性能的接口）等等</p><blockquote><p>通常这种场景使用elk/efk完成：<br><img src="https://yycreate.github.io/img/es/EFK.png" alt="EFK.png"></p></blockquote><p>扩容：</p><h4 id="2-搜索服务"><a href="#2-搜索服务" class="headerlink" title="2.搜索服务"></a>2.搜索服务</h4><blockquote><p>微服务小程序内容索引架构，可以基于不同业务将数据拆分为多个子库做业务隔离。<br><img src="https://yycreate.github.io/img/es/es_search.png" alt="es_search.png"></p><p>适用业务<br>例如：feed流</p></blockquote><h4 id="3-时序分析"><a href="#3-时序分析" class="headerlink" title="3.时序分析"></a>3.时序分析</h4><p>TimeStream优化Elasticsearch在存储指标数据方面的DSL查询复杂且慢以及存储成本过高等问题</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUT _time_stream/test_stream</span><br></pre></td></tr></table></figure><blockquote><p>TimeStream+Es+Prometheus+Grafana<br><img src="https://yycreate.github.io/img/es/Grafana.png" alt="Grafana.png"></p></blockquote><h3 id="es集群优化方案"><a href="#es集群优化方案" class="headerlink" title="es集群优化方案"></a>es集群优化方案</h3><h4 id="1-主要的优化项"><a href="#1-主要的优化项" class="headerlink" title="1.主要的优化项"></a>1.主要的优化项</h4><p><img src="https://yycreate.github.io/img/es/es_well_direction.png" alt="img_1.png"></p><h5 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a><font color=#329999>优化方案</font></h5><p>限流方案：</p><ul><li>内部服务调用权限，只有认证的服务才能进行调度。</li><li>使用队列：优化队列优先级</li><li>内存优化使用：全链路 + 精准匹配</li><li>多租户: CVM/Cgroups</li></ul><p>成本优化方案：</p><p>硬件成本</p><ul><li>冷热分离：使用混合存储平衡成本，性能</li><li>Rollup：预计算换取存储，性能</li><li>备份归档：使用廉价的存储系统备份</li><li>存储裁剪，生命周期管理等等</li></ul><p>内存成本</p><ul><li>LRU Cache：提升内存利用率 </li><li>Off Heap：降低堆内存，提高节点规格</li></ul><h5 id="方案实践"><a href="#方案实践" class="headerlink" title="方案实践"></a><font color=#329999>方案实践</font></h5><p>es6.x开始推出Rollup。</p><blockquote><p>Rollup 类似于大数据场景下的 Cube、物化视图，它的核心思想是通过预计算提前生成统计信息，释放掉原始粒度数据，从而降低存储成本、提高查询性能，通常会有数据级的收益。</p></blockquote><p>// TODO</p><p>索引汇总作业<br><a href="https://www.modb.pro/db/444747" target="_blank" rel="noopener">https://www.modb.pro/db/444747</a></p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>pod 配置demo</title>
       <link href="/k8s-pod-setting/"/>
       <url>/k8s-pod-setting/</url>
@@ -303,11 +290,11 @@
     
     
     <entry>
-      <title>es部署方式</title>
-      <link href="/es-es-set/"/>
-      <url>/es-es-set/</url>
+      <title>elasticsearch实际应用场景与扩展方案，容灾方案</title>
+      <link href="/es-es-work-place/"/>
+      <url>/es-es-work-place/</url>
       
-        <content type="html"><![CDATA[<h3 id="1-集群-cluster"><a href="#1-集群-cluster" class="headerlink" title="1.集群 cluster"></a>1.集群 cluster</h3><blockquote><p>集群部署拓扑图<br><img src="https://yycreate.github.io/img/es/cluster_build.png" alt="img.png"><br>副分片的数量可以设置的，一个Primary shard可以对应多个Replica shard</p><p>将所有数据主分片分到多个节点node中，将副分片保存在不同的节点中 （主要避免某个节点不可用时，其他节点可以提供数据使用或恢复）</p></blockquote><h4 id="集群状态颜色"><a href="#集群状态颜色" class="headerlink" title="集群状态颜色"></a><font color=#329999>集群状态颜色</font></h4><ul><li>绿色</li><li>黄色</li><li>红色</li></ul><h4 id="单点故障转移"><a href="#单点故障转移" class="headerlink" title="单点故障转移"></a><font color=#329999>单点故障转移</font></h4><p>当只有一个节点的时候，副本RS是不会生效的，表示节点宕机时候，数据还是不可用，不会冗余数据。容错率是0%。</p><p>当只有两个节点时，数据会会有主分片和副分片，每个node上都有完整的数据。容错率是50%。</p><p>当有多个节点时候，为了分散负载堆分片重新分配。（CPU,RAM,I/O）等资源被更少数据共享。</p><h4 id="集群故障转移"><a href="#集群故障转移" class="headerlink" title="集群故障转移"></a><font color=#329999>集群故障转移</font></h4><blockquote><p>集群故障转移<br><img src="https://yycreate.github.io/img/es/cluster_error.png" alt="cluster_error.png"></p><p>集群中一个节点故障，故障节点<code>primary shard</code>的副本<code>Replica shard</code>会主动升级为<code>primary shard</code>继续提供服务。</p><p>然而如图所示，只剩下6 of 9节点使用，集群状态为yellow。</p></blockquote><h4 id="路由计算-amp-分片控制"><a href="#路由计算-amp-分片控制" class="headerlink" title="路由计算 &amp; 分片控制"></a><font color=#329999>路由计算 &amp; 分片控制</font></h4><blockquote><p>分片逻辑: SHARD = HASH(routing)%number_of_primary_shards</p></blockquote><h4 id="数据写流程"><a href="#数据写流程" class="headerlink" title="数据写流程"></a><font color=#329999>数据写流程</font></h4><p>请求会走到协调节点，协调节点可以是集群中任意节点。</p><blockquote><p>客户端写请求<br><img src="https://yycreate.github.io/img/es/es_write.png" alt="img_1.png"></p><p>1.客户端协写请求（协调节点）</p><p>2.协调节点到指定分片节点</p><p>3.主节点保存数据</p><p>4.主节点发送数据到副本（可以设置副本同步时间）</p><p>5.副本保存后反馈</p><p>6.主分片反馈</p><p>7.客户端收到，写请求完成</p></blockquote><h4 id="数据读流程"><a href="#数据读流程" class="headerlink" title="数据读流程"></a><font color=#329999>数据读流程</font></h4><p>协调节点是任意的，节点分为数据节点，协调节点，master节点</p><blockquote><p>客户端读操作<br><img src="https://yycreate.github.io/img/es/es_read.png" alt="img.png"></p><p>1.协调节点获取请求</p><p>2.计算DSL语句，找到主分片，副分片所在的节点</p><p>3.根据轮询策略，请求转发到其他节点上</p><p>4.协调节点获取到查询文档后，返回给客户端</p></blockquote><h4 id="数据更新流程"><a href="#数据更新流程" class="headerlink" title="数据更新流程"></a><font color=#329999>数据更新流程</font></h4><blockquote><p>更新数据<br><img src="https://yycreate.github.io/img/es/es_update.png" alt="img.png"></p><p>1.客户端调用协调节点</p><p>2.协调节点找到数据主分片，同步数据和索引</p><p>3.从主分片读取_source，若主分片被其他进程占用，会重试至放弃。</p><p>4.主分片同步完，给所有副分片发送文档同步和索引同步</p><p>5.所有副分片返回成功，主分片返回成功给协调节点，最终返回给客户端</p></blockquote><h4 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a><font color=#329999>倒排索引</font></h4><blockquote><p>Elasticsearch使用倒排索引的结构，它适用于快速的全文搜索。</p></blockquote><h5 id="正向索引"><a href="#正向索引" class="headerlink" title="正向索引"></a>正向索引</h5><p>先介绍什么是正向索引</p><blockquote><p>搜索引擎会把文档对应文件的一个ID，根据ID搜索到对应的文档和字段。<br><img src="https://yycreate.github.io/img/es/index_front.png" alt="img_1.png"></p></blockquote><h5 id="倒排索引-1"><a href="#倒排索引-1" class="headerlink" title="倒排索引"></a>倒排索引</h5><p>倒排索引就是根据对应的关键字，找到对应的文档</p><blockquote><p>建立关键字与所有关联的文档内容，id等等信息<br><img src="https://yycreate.github.io/img/es/index_back.png" alt="img.png"></p><p>难点：todo</p></blockquote><hr><div align="center"><font color = orange>你的支持是我加班的动力</font><br/><strong>微信</strong><br/><img src="https://yycreate.github.io/img/wxzf.jpg" style="width:256px;"/><strong>支付宝</strong><br/><img src="https://yycreate.github.io/img/zfbzf_1.jpg" style="width:256px;"/></div>]]></content>
+        <content type="html"><![CDATA[<p>浅显概括一下es的能力：分词能力，倒排索引，聚合计算能力。</p><p>能力示意图</p><h3 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h3><p>稍微了解一下elasticsearch生态</p><p><img src="https://yycreate.github.io/img/es/es_env.png" alt="es_env.png"></p><h4 id="1-实时日志分析"><a href="#1-实时日志分析" class="headerlink" title="1.实时日志分析"></a>1.实时日志分析</h4><p>主要运用场景：用户行为的业务日志（埋点），运营日志（系统的慢性能的接口）等等</p><blockquote><p>通常这种场景使用elk/efk完成：<br><img src="https://yycreate.github.io/img/es/EFK.png" alt="EFK.png"></p></blockquote><p>扩容：</p><h4 id="2-搜索服务"><a href="#2-搜索服务" class="headerlink" title="2.搜索服务"></a>2.搜索服务</h4><blockquote><p>微服务小程序内容索引架构，可以基于不同业务将数据拆分为多个子库做业务隔离。<br><img src="https://yycreate.github.io/img/es/es_search.png" alt="es_search.png"></p><p>适用业务<br>例如：feed流</p></blockquote><h4 id="3-时序分析"><a href="#3-时序分析" class="headerlink" title="3.时序分析"></a>3.时序分析</h4><p>TimeStream优化Elasticsearch在存储指标数据方面的DSL查询复杂且慢以及存储成本过高等问题</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUT _time_stream/test_stream</span><br></pre></td></tr></table></figure><blockquote><p>TimeStream+Es+Prometheus+Grafana<br><img src="https://yycreate.github.io/img/es/Grafana.png" alt="Grafana.png"></p></blockquote><h3 id="es集群优化方案"><a href="#es集群优化方案" class="headerlink" title="es集群优化方案"></a>es集群优化方案</h3><h4 id="1-主要的优化项"><a href="#1-主要的优化项" class="headerlink" title="1.主要的优化项"></a>1.主要的优化项</h4><p><img src="https://yycreate.github.io/img/es/es_well_direction.png" alt="img_1.png"></p><h5 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a><font color=#329999>优化方案</font></h5><p>限流方案：</p><ul><li>内部服务调用权限，只有认证的服务才能进行调度。</li><li>使用队列：优化队列优先级</li><li>内存优化使用：全链路 + 精准匹配</li><li>多租户: CVM/Cgroups</li></ul><p>成本优化方案：</p><p>硬件成本</p><ul><li>冷热分离：使用混合存储平衡成本，性能</li><li>Rollup：预计算换取存储，性能</li><li>备份归档：使用廉价的存储系统备份</li><li>存储裁剪，生命周期管理等等</li></ul><p>内存成本</p><ul><li>LRU Cache：提升内存利用率 </li><li>Off Heap：降低堆内存，提高节点规格</li></ul><h5 id="方案实践"><a href="#方案实践" class="headerlink" title="方案实践"></a><font color=#329999>方案实践</font></h5><p>es6.x开始推出Rollup。</p><blockquote><p>Rollup 类似于大数据场景下的 Cube、物化视图，它的核心思想是通过预计算提前生成统计信息，释放掉原始粒度数据，从而降低存储成本、提高查询性能，通常会有数据级的收益。</p></blockquote><p>// TODO</p><p>索引汇总作业<br><a href="https://www.modb.pro/db/444747" target="_blank" rel="noopener">https://www.modb.pro/db/444747</a></p>]]></content>
       
       
       
@@ -329,11 +316,24 @@
     
     
     <entry>
+      <title>es部署方式</title>
+      <link href="/es-es-set/"/>
+      <url>/es-es-set/</url>
+      
+        <content type="html"><![CDATA[<h3 id="1-集群-cluster"><a href="#1-集群-cluster" class="headerlink" title="1.集群 cluster"></a>1.集群 cluster</h3><blockquote><p>集群部署拓扑图<br><img src="https://yycreate.github.io/img/es/cluster_build.png" alt="img.png"><br>副分片的数量可以设置的，一个Primary shard可以对应多个Replica shard</p><p>将所有数据主分片分到多个节点node中，将副分片保存在不同的节点中 （主要避免某个节点不可用时，其他节点可以提供数据使用或恢复）</p></blockquote><h4 id="集群状态颜色"><a href="#集群状态颜色" class="headerlink" title="集群状态颜色"></a><font color=#329999>集群状态颜色</font></h4><ul><li>绿色</li><li>黄色</li><li>红色</li></ul><h4 id="单点故障转移"><a href="#单点故障转移" class="headerlink" title="单点故障转移"></a><font color=#329999>单点故障转移</font></h4><p>当只有一个节点的时候，副本RS是不会生效的，表示节点宕机时候，数据还是不可用，不会冗余数据。容错率是0%。</p><p>当只有两个节点时，数据会会有主分片和副分片，每个node上都有完整的数据。容错率是50%。</p><p>当有多个节点时候，为了分散负载堆分片重新分配。（CPU,RAM,I/O）等资源被更少数据共享。</p><h4 id="集群故障转移"><a href="#集群故障转移" class="headerlink" title="集群故障转移"></a><font color=#329999>集群故障转移</font></h4><blockquote><p>集群故障转移<br><img src="https://yycreate.github.io/img/es/cluster_error.png" alt="cluster_error.png"></p><p>集群中一个节点故障，故障节点<code>primary shard</code>的副本<code>Replica shard</code>会主动升级为<code>primary shard</code>继续提供服务。</p><p>然而如图所示，只剩下6 of 9节点使用，集群状态为yellow。</p></blockquote><h4 id="路由计算-amp-分片控制"><a href="#路由计算-amp-分片控制" class="headerlink" title="路由计算 &amp; 分片控制"></a><font color=#329999>路由计算 &amp; 分片控制</font></h4><blockquote><p>分片逻辑: SHARD = HASH(routing)%number_of_primary_shards</p></blockquote><h4 id="数据写流程"><a href="#数据写流程" class="headerlink" title="数据写流程"></a><font color=#329999>数据写流程</font></h4><p>请求会走到协调节点，协调节点可以是集群中任意节点。</p><blockquote><p>客户端写请求<br><img src="https://yycreate.github.io/img/es/es_write.png" alt="img_1.png"></p><p>1.客户端协写请求（协调节点）</p><p>2.协调节点到指定分片节点</p><p>3.主节点保存数据</p><p>4.主节点发送数据到副本（可以设置副本同步时间）</p><p>5.副本保存后反馈</p><p>6.主分片反馈</p><p>7.客户端收到，写请求完成</p></blockquote><h4 id="数据读流程"><a href="#数据读流程" class="headerlink" title="数据读流程"></a><font color=#329999>数据读流程</font></h4><p>协调节点是任意的，节点分为数据节点，协调节点，master节点</p><blockquote><p>客户端读操作<br><img src="https://yycreate.github.io/img/es/es_read.png" alt="img.png"></p><p>1.协调节点获取请求</p><p>2.计算DSL语句，找到主分片，副分片所在的节点</p><p>3.根据轮询策略，请求转发到其他节点上</p><p>4.协调节点获取到查询文档后，返回给客户端</p></blockquote><h4 id="数据更新流程"><a href="#数据更新流程" class="headerlink" title="数据更新流程"></a><font color=#329999>数据更新流程</font></h4><blockquote><p>更新数据<br><img src="https://yycreate.github.io/img/es/es_update.png" alt="img.png"></p><p>1.客户端调用协调节点</p><p>2.协调节点找到数据主分片，同步数据和索引</p><p>3.从主分片读取_source，若主分片被其他进程占用，会重试至放弃。</p><p>4.主分片同步完，给所有副分片发送文档同步和索引同步</p><p>5.所有副分片返回成功，主分片返回成功给协调节点，最终返回给客户端</p></blockquote><h4 id="倒排索引"><a href="#倒排索引" class="headerlink" title="倒排索引"></a><font color=#329999>倒排索引</font></h4><blockquote><p>Elasticsearch使用倒排索引的结构，它适用于快速的全文搜索。</p></blockquote><h5 id="正向索引"><a href="#正向索引" class="headerlink" title="正向索引"></a>正向索引</h5><p>先介绍什么是正向索引</p><blockquote><p>搜索引擎会把文档对应文件的一个ID，根据ID搜索到对应的文档和字段。<br><img src="https://yycreate.github.io/img/es/index_front.png" alt="img_1.png"></p></blockquote><h5 id="倒排索引-1"><a href="#倒排索引-1" class="headerlink" title="倒排索引"></a>倒排索引</h5><p>倒排索引就是根据对应的关键字，找到对应的文档</p><blockquote><p>建立关键字与所有关联的文档内容，id等等信息<br><img src="https://yycreate.github.io/img/es/index_back.png" alt="img.png"></p><p>难点：todo</p></blockquote><hr><div align="center"><font color = orange>你的支持是我加班的动力</font><br/><strong>微信</strong><br/><img src="https://yycreate.github.io/img/wxzf.jpg" style="width:256px;"/><strong>支付宝</strong><br/><img src="https://yycreate.github.io/img/zfbzf_1.jpg" style="width:256px;"/></div>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>hexo blog</title>
       <link href="/blog/"/>
       <url>/blog/</url>
       
-        <content type="html"><![CDATA[<p>start server<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure></p><p>deploy<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure></p><p>change theme<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cd blog</span><br><span class="line">rm -rf source</span><br><span class="line">rm -rf scaffolds</span><br><span class="line">rm _config.yml package.json README.md LICENSE</span><br><span class="line">git clone https://github.com/dusign/hexo-theme-snail.git</span><br><span class="line">mv ./hexo-theme-snail/snail ./themes</span><br><span class="line">mv ./hexo-theme-snail/* ./</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></p>]]></content>
+        <content type="html"><![CDATA[<p>start server<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure></p><p>deploy<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo generate &amp;&amp; hexo deploy</span><br></pre></td></tr></table></figure></p><p>change theme<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cd blog</span><br><span class="line">rm -rf source</span><br><span class="line">rm -rf scaffolds</span><br><span class="line">rm _config.yml package.json README.md LICENSE</span><br><span class="line">git clone https://github.com/dusign/hexo-theme-snail.git</span><br><span class="line">mv ./hexo-theme-snail/snail ./themes</span><br><span class="line">mv ./hexo-theme-snail/* ./</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure></p>]]></content>
       
       
       
