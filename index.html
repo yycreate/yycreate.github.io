@@ -164,6 +164,13 @@
 
                         
                         <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/about/">About</a>
                         </li>
                         
@@ -179,13 +186,6 @@
                         
                         <li>
                             <a href="/photography/">Photography</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -407,16 +407,22 @@ jdk17商用协议
 
         <div class="post-preview">
 
-            <a href="/vm-PRNG/">
+            <a href="/vm-g1-zgc/">
                 <h2 class="post-title">
-                    vm-PRNG
+                    G1 与 ZGC 的全过程解析
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    PRNG算法
-123456Xn+1 = (aXn + c) mod mwhere X is the sequence of pseudo-random valuesm, 0 &lt; m  - modulus a, 0 &lt; a &lt; m  - multiplierc, 0 ≤ c &lt; m  - incrementx0, 0 ≤ x0 &lt; m  - the seed or......
+                    1.JDK16 JVM相关的改动ZGC 并发栈处理// todo 待一篇详细ZGC的流程场景
+弹性元数据及时的将 HotSpot 中无用的元数据(metaspace)内存还给操作系统，减少元数据的内存占用。
+
+大概介绍一下垃圾处理器的种类与处理流程
+1.G1 (Garbage-First)垃圾回收器
+jdk8起才支持G1垃圾回收器，启动参数添加 -XX:+UseG1GC
+
+G1垃圾回收器的主......
                 </div>
             </a>
             
@@ -438,22 +444,16 @@ jdk17商用协议
 
         <div class="post-preview">
 
-            <a href="/vm-g1-zgc/">
+            <a href="/vm-PRNG/">
                 <h2 class="post-title">
-                    G1 与 ZGC 的全过程解析
+                    vm-PRNG
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    1.JDK16 JVM相关的改动ZGC 并发栈处理// todo 待一篇详细ZGC的流程场景
-弹性元数据及时的将 HotSpot 中无用的元数据(metaspace)内存还给操作系统，减少元数据的内存占用。
-
-大概介绍一下垃圾处理器的种类与处理流程
-1.G1 (Garbage-First)垃圾回收器
-jdk8起才支持G1垃圾回收器，启动参数添加 -XX:+UseG1GC
-
-G1垃圾回收器的主......
+                    PRNG算法
+123456Xn+1 = (aXn + c) mod mwhere X is the sequence of pseudo-random valuesm, 0 &lt; m  - modulus a, 0 &lt; a &lt; m  - multiplierc, 0 ≤ c &lt; m  - incrementx0, 0 ≤ x0 &lt; m  - the seed or......
                 </div>
             </a>
             
@@ -868,11 +868,11 @@ redis 数据同步流程...
         </li>
       
         <li>
-          <a href="/vm-PRNG/">vm-PRNG</a>
+          <a href="/vm-g1-zgc/">G1 与 ZGC 的全过程解析</a>
         </li>
       
         <li>
-          <a href="/vm-g1-zgc/">G1 与 ZGC 的全过程解析</a>
+          <a href="/vm-PRNG/">vm-PRNG</a>
         </li>
       
         <li>
