@@ -13,11 +13,11 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/vm-g1-zgc/</loc>
+    <loc>https://dusign.net/vm-PRNG/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/vm-PRNG/</loc>
+    <loc>https://dusign.net/vm-g1-zgc/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -33,11 +33,11 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/redis-redis-main/</loc>
+    <loc>https://dusign.net/redis-redis-point/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/redis-redis-point/</loc>
+    <loc>https://dusign.net/redis-redis-main/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -45,19 +45,11 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/server-availablity/</loc>
-    <lastmod>2023-05-26</lastmod>
-  </url>
-  <url>
     <loc>https://dusign.net/server-DDD-area/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/nosql-mongo/</loc>
-    <lastmod>2023-05-26</lastmod>
-  </url>
-  <url>
-    <loc>https://dusign.net/redis-red-lock/</loc>
+    <loc>https://dusign.net/server-availablity/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -65,7 +57,19 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
+    <loc>https://dusign.net/redis-red-lock/</loc>
+    <lastmod>2023-05-26</lastmod>
+  </url>
+  <url>
+    <loc>https://dusign.net/nosql-mongo/</loc>
+    <lastmod>2023-05-26</lastmod>
+  </url>
+  <url>
     <loc>https://dusign.net/mysql-transition-level/</loc>
+    <lastmod>2023-05-26</lastmod>
+  </url>
+  <url>
+    <loc>https://dusign.net/mysql-myql-excel-sql/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -74,10 +78,6 @@
   </url>
   <url>
     <loc>https://dusign.net/mysql-mysql-transition/</loc>
-    <lastmod>2023-05-26</lastmod>
-  </url>
-  <url>
-    <loc>https://dusign.net/mysql-myql-excel-sql/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>

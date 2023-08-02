@@ -197,12 +197,12 @@
                     
 
                         
-                    
-
-                        
                         <li>
                             <a href="/tags/">Tags</a>
                         </li>
+                        
+                    
+
                         
                     
                     
@@ -326,6 +326,45 @@
 
         <div class="post-preview">
 
+            <a href="/server-DDD-area/">
+                <h2 class="post-title">
+                    DDD领域模型
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    注： 这是很抽象的概念，尽量举例，让概念更好理解。
+1. 聚合根，聚合
+定义：聚合是用来定义领域所有权和边界的。
+
+实体
+定义：一个由它的标识定义的对象叫做实体；具有唯一标识性和可变性；它是具有业务逻辑；对应现实世界一个具体的业务对象。
+
+简而言之，就是把多个相关的值与对象整体堪称一个域，简化整体的关系。
+2. 领域，子域
+领域即问题域，通常是根据一个组织所处的行业进行识别，它基于业务的愿景......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by eliooyang on
+                    2023-05-26
+                </p>
+                <div class="tags">
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
             <a href="/server-availablity/">
                 <h2 class="post-title">
                     高并发架构设计经验
@@ -356,24 +395,51 @@
 
         <div class="post-preview">
 
-            <a href="/server-DDD-area/">
+            <a href="/protocol-tcp/">
                 <h2 class="post-title">
-                    DDD领域模型
+                    protocol-tcp
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    注： 这是很抽象的概念，尽量举例，让概念更好理解。
-1. 聚合根，聚合
-定义：聚合是用来定义领域所有权和边界的。
+                    
+tcp 黏包/沾包
 
-实体
-定义：一个由它的标识定义的对象叫做实体；具有唯一标识性和可变性；它是具有业务逻辑；对应现实世界一个具体的业务对象。
+...
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by eliooyang on
+                    2023-05-26
+                </p>
+                <div class="tags">
+                    
+                </div>
+            
 
-简而言之，就是把多个相关的值与对象整体堪称一个域，简化整体的关系。
-2. 领域，子域
-领域即问题域，通常是根据一个组织所处的行业进行识别，它基于业务的愿景......
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/redis-red-lock/">
+                <h2 class="post-title">
+                    红锁，redis主从部署的分布式锁
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    
+红锁采用主节点过半机制，即获取锁或者释放锁成功的标志为：在过半的节点上操作成功。
+
+...
                 </div>
             </a>
             
@@ -430,72 +496,6 @@ mongodb是文档型数据库，文档结构是BSON（binary serialized document 
 
         <div class="post-preview">
 
-            <a href="/redis-red-lock/">
-                <h2 class="post-title">
-                    红锁，redis主从部署的分布式锁
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    
-红锁采用主节点过半机制，即获取锁或者释放锁成功的标志为：在过半的节点上操作成功。
-
-...
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by eliooyang on
-                    2023-05-26
-                </p>
-                <div class="tags">
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/protocol-tcp/">
-                <h2 class="post-title">
-                    protocol-tcp
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    
-tcp 黏包/沾包
-
-...
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by eliooyang on
-                    2023-05-26
-                </p>
-                <div class="tags">
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
             <a href="/mysql-transition-level/">
                 <h2 class="post-title">
                     mysql 优化方案
@@ -505,6 +505,36 @@ tcp 黏包/沾包
                 </h3>
                 <div class="post-content-preview">
                     1.索引优化索引大小优化避免索引失效联合索引，减少回表  2.单机优化3. 业务优化避免连表查询join拆表，热点字段放在主表4.主从部署优化5.分库分表优化6.多地容灾部署优化...
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by eliooyang on
+                    2023-05-26
+                </p>
+                <div class="tags">
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/mysql-myql-excel-sql/">
+                <h2 class="post-title">
+                    SQL语句是如何执行的
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    mysql 结构执行excel的流程...
                 </div>
             </a>
             
@@ -585,36 +615,6 @@ tcp 黏包/沾包
 缺点：
 
 当某个事务执行时，多次查询，会查询到不一样的结果。（不可重复读，重复读同一条数据结果可能不一致）简而言之:别的事务可能提交了新数据，导致同一个SQL......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by eliooyang on
-                    2023-05-26
-                </p>
-                <div class="tags">
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
-            <a href="/mysql-myql-excel-sql/">
-                <h2 class="post-title">
-                    SQL语句是如何执行的
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    mysql 结构执行excel的流程...
                 </div>
             </a>
             
@@ -832,11 +832,11 @@ Topic：消息的主题，可以理解为消息的分类，kafka的数据......
         </li>
       
         <li>
-          <a href="/vm-g1-zgc/">G1 与 ZGC 的全过程解析</a>
+          <a href="/vm-PRNG/">vm-PRNG</a>
         </li>
       
         <li>
-          <a href="/vm-PRNG/">vm-PRNG</a>
+          <a href="/vm-g1-zgc/">G1 与 ZGC 的全过程解析</a>
         </li>
       
         <li>
