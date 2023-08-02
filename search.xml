@@ -30,19 +30,6 @@
     
     
     <entry>
-      <title>graal vm</title>
-      <link href="/vm-graal-VM/"/>
-      <url>/vm-graal-VM/</url>
-      
-        <content type="html"><![CDATA[<p><a href="https://www.graalvm.org/" target="_blank" rel="noopener">官网</a></p><h3 id="一-共识"><a href="#一-共识" class="headerlink" title="一.共识"></a>一.共识</h3><p>在JVM的hotspot实现上增强的的全栈型虚拟机。<br>虚拟机支持原本Java虚拟机上的Java、Scala、Groovy、Kotlin<br>还支持基于LLVM的C、C++、Rust<br>还支持其他像JavaScript、Ruby、Python和R语言<br>可以无额外开销地混合使用这些编程语言，支持不同语言中混用对方的接口和对象。</p><h3 id="二-安装"><a href="#二-安装" class="headerlink" title="二. 安装"></a>二. 安装</h3><h4 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h4><h4 id="云上环境"><a href="#云上环境" class="headerlink" title="云上环境"></a>云上环境</h4><h3 id=""><a href="#" class="headerlink" title=" "></a> </h3>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>vm-PRNG</title>
       <link href="/vm-PRNG/"/>
       <url>/vm-PRNG/</url>
@@ -61,6 +48,19 @@
       <url>/vm-g1-zgc/</url>
       
         <content type="html"><![CDATA[<h3 id="1-JDK16-JVM相关的改动"><a href="#1-JDK16-JVM相关的改动" class="headerlink" title="1.JDK16 JVM相关的改动"></a>1.JDK16 JVM相关的改动</h3><h4 id="ZGC-并发栈处理"><a href="#ZGC-并发栈处理" class="headerlink" title="ZGC 并发栈处理"></a>ZGC 并发栈处理</h4><p>// todo 待一篇详细ZGC的流程场景</p><h4 id="弹性元数据"><a href="#弹性元数据" class="headerlink" title="弹性元数据"></a>弹性元数据</h4><p>及时的将 HotSpot 中无用的元数据(metaspace)内存还给操作系统，减少元数据的内存占用。</p><hr><p>大概介绍一下垃圾处理器的种类与处理流程</p><h3 id="1-G1-Garbage-First-垃圾回收器"><a href="#1-G1-Garbage-First-垃圾回收器" class="headerlink" title="1.G1 (Garbage-First)垃圾回收器"></a>1.G1 (Garbage-First)垃圾回收器</h3><blockquote><p>jdk8起才支持G1垃圾回收器，启动参数添加 -XX:+UseG1GC</p></blockquote><h4 id="G1垃圾回收器的主要流程"><a href="#G1垃圾回收器的主要流程" class="headerlink" title="G1垃圾回收器的主要流程"></a>G1垃圾回收器的主要流程</h4><p>G1的堆内存结构，不做物理分区，仅做逻辑分区：</p><p><img src="https://yycreate.github.io/img/image/gc/G1_heap_style.png" alt="img_1.png"></p><p>Eden: 默认占用堆内存的5%；可以通过-XX:G1NewSizePercent调整年轻代的占比。</p><p>Humongous: 大对象存储区，在MixedGC或Full gc的时候会回收。<br>大对象: 当一个对象的大小超过了一个Region区域的50%</p><p>G1垃圾回收主要分为两个阶段，年轻代回收（young-only）和空间回收阶段（space reclamation），不断交替进行。</p><p><code>这是一个周期性事件，达到某些要求会进行GC，所有情况都是跟着用户进程同时进行的。</code></p><hr><h5 id="年轻代回收"><a href="#年轻代回收" class="headerlink" title="年轻代回收"></a><strong><font color=#329999>年轻代回收</font></strong></h5><p><font color=#329999><br>    G1会创建回收集（collection set），记录需要被回收的内存分段的集合，年轻代回收过程的回收集包含Eden和Survivor所有内存段。</font><br><br/></p><h5 id="如何记录回收集以及回收流程"><a href="#如何记录回收集以及回收流程" class="headerlink" title="如何记录回收集以及回收流程"></a>如何记录回收集以及回收流程</h5><p>注：每个Region初始化时，会初始化一个remembered set（已记忆集合）简称RSet，该集合用来记录并跟踪其它Region指向该Region中对象的引用。<br>每个Region默认按照512Kb划分成多个Card，所以RSet需要记录的东西应该是 xx Region的 xx Card。</p><blockquote><p>1.扫描根</p><p>static变量指向对象，正在执行方法调用链的局部对象。引用与RSet记录的外部引用，作为扫描入口</p></blockquote><p>RSet数据，在每个Region中。<br><img src="https://yycreate.github.io/img/image/gc/region_RSET.png" alt="img_1.png"></p><blockquote><p>2.更新RSet<br>处理dirty card queue中的card，更新RSet。反应老年代对应内存分段中对象引用。</p></blockquote><p>dirty card queue在每个Java线程都有，方法所使用内存标志为duty，插入到队列中；全局也有个queue共享某部分card。</p><blockquote><p>3.处理RSet</p><p>识别被老年代对象指向的Eden中的对象,这些被指向的Eden中的对象被认为是存活的对象。</p><p>4.复制对象</p><p>此阶段,对象树被遍历,Eden区内存段中存活的对象会被复制到Survivor区中空的内存分段,Survivor区内存段中存活的对象如果年龄未达阈值,年龄会加1,达到阈值会被复制到Old区中空的内存分段。如果Survivor空间不够,Eden空间的部分数据会直接晋升到老年代空间。</p><p>5.处理引用</p><p>处理Soft,Weak,Phantom,Final,JNI Weak 等引用。Eden空间的数据清空,GC停止工作,而目标内存中的对象连续存储的,没有碎片,复制过程可以达到内存整理的效果。</p></blockquote><h5 id="并发标记过程"><a href="#并发标记过程" class="headerlink" title="并发标记过程"></a><strong><font color=#329999>并发标记过程</font></strong></h5><ul><li>初始标记阶段: 标记从根节点直接可达的对象。这个阶段是STW的,并且会触发一次年轻代GC。 </li><li>根区域扫描(Root Region Scanning): G1 GC扫描survivor区直接可达的老年代区域对象,并标记被引用的对象。这一过程必须在young GC之前完成。 </li><li>并发标记(Concurrent Marking): 在整个堆中进行并发标记(和应用程序并发执行),此过程可能被young GC中断。在并发标记阶段,若发现区域对象中的所有对象都是垃圾,那这个区域会被立即回收。同时,并发标记过程中,会计算每个区域的对象活性(区域中存活对象的比例)。 </li><li>再次标记(Remark): 由于应用程序持续进行,需要修正上一次的标记结果。是STW的。G1中采用了比CMS更快的初始快照法: snapshot-at-the-beginning(SATB)。 </li><li>独占清理(cleanup,STW): 计算各个区域的存活对象和GC回收比例,并进行排序,识别可以混合回收的区域。</li><li>并发清理阶段: 识别并清理完全空闲的区域。</li></ul><p>如图所示，回收的流程：<br><img src="https://yycreate.github.io/img/image/gc/G1_step.png" alt="img_1.png"></p><h5 id="混合回收（Mixed-GC）"><a href="#混合回收（Mixed-GC）" class="headerlink" title="混合回收（Mixed GC）"></a><strong><font color=#329999>混合回收（Mixed GC）</font></strong></h5><p>当更多的对象晋升到老年代old region时,为了避免堆内存被耗尽,虚拟机会触发一个混合的垃圾收集器,即Mixed GC。</p><p>该算法并不是一个Old GC,除了回收整个Young Region,还会回收一部分的Old Region。</p><h5 id="FULL-GC"><a href="#FULL-GC" class="headerlink" title="FULL GC"></a><strong><font color=#329999>FULL GC</font></strong></h5><p>G1初衷是要避免Full GC发生。</p><p>上门的GC无法正常完成GC回收，G1会STW并使用单线程算法进行垃圾回收，性能很差。</p><p>以下两种会调起Full GC</p><ul><li>Evacuation的时候没有足够的to-space来存放晋升的对象。</li><li>并发处理完成之前空间耗尽。</li></ul><h4 id="三色算法-STAB-snapshot-at-the-beginning"><a href="#三色算法-STAB-snapshot-at-the-beginning" class="headerlink" title="三色算法 STAB(snapshot-at-the-beginning)"></a>三色算法 STAB(snapshot-at-the-beginning)</h4><p>使用情况实在并发标记情况下：<br>//todo</p><hr><h3 id="2-ZGC-垃圾回收器"><a href="#2-ZGC-垃圾回收器" class="headerlink" title="2.ZGC 垃圾回收器"></a>2.ZGC 垃圾回收器</h3><h3 id="JDK升级对各个垃圾回收器的优化，以及性能不叫"><a href="#JDK升级对各个垃圾回收器的优化，以及性能不叫" class="headerlink" title="JDK升级对各个垃圾回收器的优化，以及性能不叫"></a>JDK升级对各个垃圾回收器的优化，以及性能不叫</h3>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>graal vm</title>
+      <link href="/vm-graal-VM/"/>
+      <url>/vm-graal-VM/</url>
+      
+        <content type="html"><![CDATA[<p><a href="https://www.graalvm.org/" target="_blank" rel="noopener">官网</a></p><h3 id="一-共识"><a href="#一-共识" class="headerlink" title="一.共识"></a>一.共识</h3><p>在JVM的hotspot实现上增强的的全栈型虚拟机。<br>虚拟机支持原本Java虚拟机上的Java、Scala、Groovy、Kotlin<br>还支持基于LLVM的C、C++、Rust<br>还支持其他像JavaScript、Ruby、Python和R语言<br>可以无额外开销地混合使用这些编程语言，支持不同语言中混用对方的接口和对象。</p><h3 id="二-安装"><a href="#二-安装" class="headerlink" title="二. 安装"></a>二. 安装</h3><h4 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h4><h4 id="云上环境"><a href="#云上环境" class="headerlink" title="云上环境"></a>云上环境</h4><h3 id=""><a href="#" class="headerlink" title=" "></a> </h3>]]></content>
       
       
       
@@ -108,19 +108,6 @@
     
     
     <entry>
-      <title>redis的使用</title>
-      <link href="/redis-redis-point/"/>
-      <url>/redis-redis-point/</url>
-      
-        <content type="html"><![CDATA[<p>该篇不会写redis的基础使用，而是根据redis的特性去挖掘一下原理，并深入理解</p><h3 id="redis-淘汰策略"><a href="#redis-淘汰策略" class="headerlink" title="redis 淘汰策略"></a>redis 淘汰策略</h3><h3 id="redis-内存访问流程"><a href="#redis-内存访问流程" class="headerlink" title="redis 内存访问流程"></a>redis 内存访问流程</h3><p><a href="https://www.jianshu.com/p/2ce36bca2869" target="_blank" rel="noopener">https://www.jianshu.com/p/2ce36bca2869</a></p><h3 id="redis-数据同步流程"><a href="#redis-数据同步流程" class="headerlink" title="redis 数据同步流程"></a>redis 数据同步流程</h3>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>redis 业务实现方案</title>
       <link href="/redis-redis-business/"/>
       <url>/redis-redis-business/</url>
@@ -139,6 +126,19 @@
       <url>/server-DDD-area/</url>
       
         <content type="html"><![CDATA[<p>注： 这是很抽象的概念，尽量举例，让概念更好理解。</p><h3 id="1-聚合根，聚合"><a href="#1-聚合根，聚合" class="headerlink" title="1. 聚合根，聚合"></a>1. 聚合根，聚合</h3><blockquote><p>定义：聚合是用来定义领域所有权和边界的。</p></blockquote><h4 id="实体"><a href="#实体" class="headerlink" title="实体"></a>实体</h4><blockquote><p>定义：<br>一个由它的标识定义的对象叫做实体；<br>具有唯一标识性和可变性；<br>它是具有业务逻辑；<br>对应现实世界一个具体的业务对象。</p></blockquote><p>简而言之，就是把多个相关的值与对象整体堪称一个域，简化整体的关系。</p><h3 id="2-领域，子域"><a href="#2-领域，子域" class="headerlink" title="2. 领域，子域"></a>2. 领域，子域</h3><blockquote><p>领域即问题域，通常是根据一个组织所处的行业进行识别，<br>它基于业务的愿景，定义了系统要解决的现实问题的目标和范围。<br>领域越大，业务的范围也越大，大的领域可以拆分成小的问题域，称之为子域。<br>根据子域重要性和功能属性划，可以将其分为三类：核心域、支撑域和通用域</p></blockquote><p>简单来说，对于产品可以把领域理解为这个产品所解决的问题。</p><ul><li>例如抖音，为了就是输出内容，商户打广告等等平台，且想留存用户在抖音内消费等等功能的产品<ul><li>核心<ol><li>需要优质的内容输出机制，吸引用户创作</li><li>需要吸引用户留存，提高用户体验</li><li>让商家看到抖音的用户潜力，吸引商家入驻在这投放广告，让用户创作更好的优质内容。</li></ol></li></ul></li><li>例如微信，让腾讯内的产品切入到生活的方方面面<ul><li>核心<ul><li>优质的社交用户体系体验，留存了很多用户（微信好友，通信功能）</li></ul></li><li>支撑域<ul><li>微信的用户生态-腾讯其他产品的支撑域名</li><li>朋友圈，微信支付，微信好友</li></ul></li><li>通用域<ul><li>公众号，订阅号消息，短信等等</li></ul></li></ul></li><li>例如懂车帝，可能上面的体系太大不太清楚其中的关系；懂车帝主要解决选车的问题<ul><li>核心<ul><li>车型信息（类型，价格，性能参数）</li></ul></li><li>支撑（使用户在这里作出抉择，用户留存）<ul><li>车辆对比（里程，价格，品牌，容量等等）</li><li>用户测评</li><li>新品发布</li><li>各地补贴消息</li><li>车友圈</li></ul></li><li>通用<ul><li>支持服务…</li><li>脏词子域</li><li>日志子域</li><li>监控子域</li><li>ip子域</li></ul></li></ul></li></ul><h3 id="限界上下文"><a href="#限界上下文" class="headerlink" title="限界上下文"></a>限界上下文</h3><p>将整个环节的主要部分划分开来。</p><p>电商场景下的购买：</p><ul><li>一致性事务边界<ul><li>边界不清会导致，整体的事务重，会影响并发或者扩容资源浪费等等问题</li><li>边界划分很大的时候，状态很难捕捉。（想一想，购物车，下单，支付，物流等等都在边界内，是很难确认流程重存在的问题）</li><li>保持域内的事务一致性，能更好管理整体流程的完整</li><li>领域事件，通过捕捉某个领域的事件或者异常，通过消息队列给到别的领域去消费</li></ul></li></ul><h3 id="领域划分几个步骤"><a href="#领域划分几个步骤" class="headerlink" title="领域划分几个步骤"></a>领域划分几个步骤</h3><ol><li>定义所有实体（值）</li><li>关联所有实体的关系，并用虚线连线</li><li>删除实体键多对多的关系，若存在这种关系划分为独立域。</li><li>单个存在无意义的实体，用实线连接他们的关联关系</li><li>删除剩下的虚线，就得到了划分好的领域</li></ol><p>以下是推演：</p><p><img src="img.png" alt="img.png"></p><p>// todo</p><hr><div align="center"><font color = orange>你的支持是我加班的动力</font><br/><strong>微信</strong><br/><img src="https://yycreate.github.io/img/wxzf.jpg" style="width:256px;"/><strong>支付宝</strong><br/><img src="https://yycreate.github.io/img/zfbzf_1.jpg" style="width:256px;"/></div>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>redis的使用</title>
+      <link href="/redis-redis-point/"/>
+      <url>/redis-redis-point/</url>
+      
+        <content type="html"><![CDATA[<p>该篇不会写redis的基础使用，而是根据redis的特性去挖掘一下原理，并深入理解</p><h3 id="redis-淘汰策略"><a href="#redis-淘汰策略" class="headerlink" title="redis 淘汰策略"></a>redis 淘汰策略</h3><h3 id="redis-内存访问流程"><a href="#redis-内存访问流程" class="headerlink" title="redis 内存访问流程"></a>redis 内存访问流程</h3><p><a href="https://www.jianshu.com/p/2ce36bca2869" target="_blank" rel="noopener">https://www.jianshu.com/p/2ce36bca2869</a></p><h3 id="redis-数据同步流程"><a href="#redis-数据同步流程" class="headerlink" title="redis 数据同步流程"></a>redis 数据同步流程</h3>]]></content>
       
       
       
@@ -173,11 +173,11 @@
     
     
     <entry>
-      <title>红锁，redis主从部署的分布式锁</title>
-      <link href="/redis-red-lock/"/>
-      <url>/redis-red-lock/</url>
+      <title>protocol-tcp</title>
+      <link href="/protocol-tcp/"/>
+      <url>/protocol-tcp/</url>
       
-        <content type="html"><![CDATA[<blockquote><p>红锁采用主节点过半机制，即获取锁或者释放锁成功的标志为：在过半的节点上操作成功。</p></blockquote>]]></content>
+        <content type="html"><![CDATA[<ul><li>tcp 黏包/沾包</li></ul>]]></content>
       
       
       
@@ -186,11 +186,11 @@
     
     
     <entry>
-      <title>protocol-tcp</title>
-      <link href="/protocol-tcp/"/>
-      <url>/protocol-tcp/</url>
+      <title>红锁，redis主从部署的分布式锁</title>
+      <link href="/redis-red-lock/"/>
+      <url>/redis-red-lock/</url>
       
-        <content type="html"><![CDATA[<ul><li>tcp 黏包/沾包</li></ul>]]></content>
+        <content type="html"><![CDATA[<blockquote><p>红锁采用主节点过半机制，即获取锁或者释放锁成功的标志为：在过半的节点上操作成功。</p></blockquote>]]></content>
       
       
       
@@ -212,11 +212,11 @@
     
     
     <entry>
-      <title>mysql 执行计划</title>
-      <link href="/mysql-mysql-explain-plan/"/>
-      <url>/mysql-mysql-explain-plan/</url>
+      <title>SQL语句是如何执行的</title>
+      <link href="/mysql-myql-excel-sql/"/>
+      <url>/mysql-myql-excel-sql/</url>
       
-        <content type="html"><![CDATA[<h3 id="执行语句语法"><a href="#执行语句语法" class="headerlink" title="执行语句语法"></a>执行语句语法</h3><p>EXPLAIN/DESC SQL语句</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">explain</span></span><br></pre></td></tr></table></figure><h3 id="执行计划参数详解"><a href="#执行计划参数详解" class="headerlink" title="执行计划参数详解"></a>执行计划参数详解</h3><h4 id="1-执行计划参数"><a href="#1-执行计划参数" class="headerlink" title="1.执行计划参数"></a>1.执行计划参数</h4><font  color=#329999>select_type查询类型</font>- SIMPLE：简单查询- PRIMARY：复杂查询中最外层的 select- SUBQUERY：包含在 select 中的子查询（不在 from 子句中）- DERIVED：包含在 from 子句中的子查询（会将结果存放在一个临时表中，也称为派生表）- UNION：第二个select中查询UNION,则被标记为UNION，如果UNION出现在from子查询中，最外层被标记为DERIVED- UNION RESULT：从UNION表获取结果的select<font  color=#329999>type-访问类型</font><blockquote><p>type代表访问类型，是判断sql执行性能比较关键的一个字段，性能从高到低依次是：</p><p>system &gt; const &gt; eq_ref &gt; ref &gt; fulltext &gt; ref_or_null &gt; index_merge &gt; unique_subquery &gt; index_subquery &gt; range &gt; index &gt; ALL</p></blockquote><ul><li>system：表示只有一条数据，类似于系统表，是const的一种特例</li><li>const：表示通过索引一次就查询到数据，比较块，用于primary key（主键）和unique唯一索引</li><li>eq_ref：用于“=”运算符比较的索引列</li><li>ref：非唯一索引扫描</li><li>rang：检索给的范围的值，使用一个索引进行选择，where后面使用between、&gt;、&lt;、in等</li><li>index：当前查询的结果全部为索引列，虽然也是全部扫描，但是只查询索引数据，没有之间查询数据</li><li>all：遍历全部查询</li></ul>]]></content>
+        <content type="html"><![CDATA[<h3 id="mysql-结构"><a href="#mysql-结构" class="headerlink" title="mysql 结构"></a>mysql 结构</h3><h3 id="执行excel的流程"><a href="#执行excel的流程" class="headerlink" title="执行excel的流程"></a>执行excel的流程</h3>]]></content>
       
       
       
@@ -225,11 +225,11 @@
     
     
     <entry>
-      <title>SQL语句是如何执行的</title>
-      <link href="/mysql-myql-excel-sql/"/>
-      <url>/mysql-myql-excel-sql/</url>
+      <title>mysql 执行计划</title>
+      <link href="/mysql-mysql-explain-plan/"/>
+      <url>/mysql-mysql-explain-plan/</url>
       
-        <content type="html"><![CDATA[<h3 id="mysql-结构"><a href="#mysql-结构" class="headerlink" title="mysql 结构"></a>mysql 结构</h3><h3 id="执行excel的流程"><a href="#执行excel的流程" class="headerlink" title="执行excel的流程"></a>执行excel的流程</h3>]]></content>
+        <content type="html"><![CDATA[<h3 id="执行语句语法"><a href="#执行语句语法" class="headerlink" title="执行语句语法"></a>执行语句语法</h3><p>EXPLAIN/DESC SQL语句</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">explain</span></span><br></pre></td></tr></table></figure><h3 id="执行计划参数详解"><a href="#执行计划参数详解" class="headerlink" title="执行计划参数详解"></a>执行计划参数详解</h3><h4 id="1-执行计划参数"><a href="#1-执行计划参数" class="headerlink" title="1.执行计划参数"></a>1.执行计划参数</h4><font  color=#329999>select_type查询类型</font>- SIMPLE：简单查询- PRIMARY：复杂查询中最外层的 select- SUBQUERY：包含在 select 中的子查询（不在 from 子句中）- DERIVED：包含在 from 子句中的子查询（会将结果存放在一个临时表中，也称为派生表）- UNION：第二个select中查询UNION,则被标记为UNION，如果UNION出现在from子查询中，最外层被标记为DERIVED- UNION RESULT：从UNION表获取结果的select<font  color=#329999>type-访问类型</font><blockquote><p>type代表访问类型，是判断sql执行性能比较关键的一个字段，性能从高到低依次是：</p><p>system &gt; const &gt; eq_ref &gt; ref &gt; fulltext &gt; ref_or_null &gt; index_merge &gt; unique_subquery &gt; index_subquery &gt; range &gt; index &gt; ALL</p></blockquote><ul><li>system：表示只有一条数据，类似于系统表，是const的一种特例</li><li>const：表示通过索引一次就查询到数据，比较块，用于primary key（主键）和unique唯一索引</li><li>eq_ref：用于“=”运算符比较的索引列</li><li>ref：非唯一索引扫描</li><li>rang：检索给的范围的值，使用一个索引进行选择，where后面使用between、&gt;、&lt;、in等</li><li>index：当前查询的结果全部为索引列，虽然也是全部扫描，但是只查询索引数据，没有之间查询数据</li><li>all：遍历全部查询</li></ul>]]></content>
       
       
       
@@ -277,11 +277,11 @@
     
     
     <entry>
-      <title>pod 配置demo</title>
-      <link href="/k8s-pod-setting/"/>
-      <url>/k8s-pod-setting/</url>
+      <title>elasticsearch实际应用场景与扩展方案，容灾方案</title>
+      <link href="/es-es-work-place/"/>
+      <url>/es-es-work-place/</url>
       
-        <content type="html"><![CDATA[<p><a href="https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/resource-metrics-pipeline/" target="_blank" rel="noopener">https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/resource-metrics-pipeline/</a></p><h3 id="安装简化的k8s集群-kuboard-spray"><a href="#安装简化的k8s集群-kuboard-spray" class="headerlink" title="安装简化的k8s集群 kuboard-spray"></a>安装简化的k8s集群 kuboard-spray</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --privileged \</span><br><span class="line">  --restart=unless-stopped \</span><br><span class="line">  --name=kuboard-spray \</span><br><span class="line">  -p 80:80/tcp \</span><br><span class="line">  -v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">  -v ~/kuboard-spray-data:/data \</span><br><span class="line">  eipwork/kuboard-spray:latest-amd64</span><br></pre></td></tr></table></figure><p>docker run -d —privileged —restart=unless-stopped —name=kuboard-spray -p 80:80/tcp -v /var/run/docker.sock:/var/run/docker.sock -v ~/kuboard-spray-data:D\:/data eipwork/kuboard-spray:latest-amd64</p><h3 id="轻量版k8s-k3s"><a href="#轻量版k8s-k3s" class="headerlink" title="轻量版k8s - k3s"></a>轻量版k8s - k3s</h3><p><a href="https://docs.k3s.io/zh/" target="_blank" rel="noopener">https://docs.k3s.io/zh/</a></p><blockquote><p>在浏览器打开地址 <a href="http://这台机器的IP，输入用户名" target="_blank" rel="noopener">http://这台机器的IP，输入用户名</a> admin，默认密码 Kuboard123，即可登录 Kuboard-Spray 界面</p></blockquote><hr><h3 id="为POD分配资源"><a href="#为POD分配资源" class="headerlink" title="为POD分配资源"></a>为POD分配资源</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">memory-demo</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">mem-example</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">memory-demo-ctr</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">polinux/stress</span></span><br><span class="line">    <span class="attr">resources:</span></span><br><span class="line">      <span class="attr">requests:</span></span><br><span class="line">        <span class="attr">memory:</span> <span class="string">"100Mi"</span></span><br><span class="line">      <span class="attr">limits:</span></span><br><span class="line">        <span class="attr">memory:</span> <span class="string">"200Mi"</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">["stress"]</span></span><br><span class="line">    <span class="attr">args:</span> <span class="string">["--vm",</span> <span class="string">"1"</span><span class="string">,</span> <span class="string">"--vm-bytes"</span><span class="string">,</span> <span class="string">"150M"</span><span class="string">,</span> <span class="string">"--vm-hang"</span><span class="string">,</span> <span class="string">"1"</span><span class="string">]</span></span><br></pre></td></tr></table></figure><h2 id=""><a href="#" class="headerlink" title="#"></a>#</h2><hr><h3 id="k8s工具-管理工具"><a href="#k8s工具-管理工具" class="headerlink" title="k8s工具 管理工具"></a>k8s工具 管理工具</h3><h4 id="kubeshpere"><a href="#kubeshpere" class="headerlink" title="kubeshpere"></a>kubeshpere</h4><h4 id="kuboard"><a href="#kuboard" class="headerlink" title="kuboard"></a>kuboard</h4><p><a href="https://kuboard.cn/learning/" target="_blank" rel="noopener">https://kuboard.cn/learning/</a></p>]]></content>
+        <content type="html"><![CDATA[<p>浅显概括一下es的能力：分词能力，倒排索引，聚合计算能力。</p><p>能力示意图</p><h3 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h3><p>稍微了解一下elasticsearch生态</p><p><img src="https://yycreate.github.io/img/es/es_env.png" alt="es_env.png"></p><h4 id="1-实时日志分析"><a href="#1-实时日志分析" class="headerlink" title="1.实时日志分析"></a>1.实时日志分析</h4><p>主要运用场景：用户行为的业务日志（埋点），运营日志（系统的慢性能的接口）等等</p><blockquote><p>通常这种场景使用elk/efk完成：<br><img src="https://yycreate.github.io/img/es/EFK.png" alt="EFK.png"></p></blockquote><p>扩容：</p><h4 id="2-搜索服务"><a href="#2-搜索服务" class="headerlink" title="2.搜索服务"></a>2.搜索服务</h4><blockquote><p>微服务小程序内容索引架构，可以基于不同业务将数据拆分为多个子库做业务隔离。<br><img src="https://yycreate.github.io/img/es/es_search.png" alt="es_search.png"></p><p>适用业务<br>例如：feed流</p></blockquote><h4 id="3-时序分析"><a href="#3-时序分析" class="headerlink" title="3.时序分析"></a>3.时序分析</h4><p>TimeStream优化Elasticsearch在存储指标数据方面的DSL查询复杂且慢以及存储成本过高等问题</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUT _time_stream/test_stream</span><br></pre></td></tr></table></figure><blockquote><p>TimeStream+Es+Prometheus+Grafana<br><img src="https://yycreate.github.io/img/es/Grafana.png" alt="Grafana.png"></p></blockquote><h3 id="es集群优化方案"><a href="#es集群优化方案" class="headerlink" title="es集群优化方案"></a>es集群优化方案</h3><h4 id="1-主要的优化项"><a href="#1-主要的优化项" class="headerlink" title="1.主要的优化项"></a>1.主要的优化项</h4><p><img src="https://yycreate.github.io/img/es/es_well_direction.png" alt="img_1.png"></p><h5 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a><font color=#329999>优化方案</font></h5><p>限流方案：</p><ul><li>内部服务调用权限，只有认证的服务才能进行调度。</li><li>使用队列：优化队列优先级</li><li>内存优化使用：全链路 + 精准匹配</li><li>多租户: CVM/Cgroups</li></ul><p>成本优化方案：</p><p>硬件成本</p><ul><li>冷热分离：使用混合存储平衡成本，性能</li><li>Rollup：预计算换取存储，性能</li><li>备份归档：使用廉价的存储系统备份</li><li>存储裁剪，生命周期管理等等</li></ul><p>内存成本</p><ul><li>LRU Cache：提升内存利用率 </li><li>Off Heap：降低堆内存，提高节点规格</li></ul><h5 id="方案实践"><a href="#方案实践" class="headerlink" title="方案实践"></a><font color=#329999>方案实践</font></h5><p>es6.x开始推出Rollup。</p><blockquote><p>Rollup 类似于大数据场景下的 Cube、物化视图，它的核心思想是通过预计算提前生成统计信息，释放掉原始粒度数据，从而降低存储成本、提高查询性能，通常会有数据级的收益。</p></blockquote><p>// TODO</p><p>索引汇总作业<br><a href="https://www.modb.pro/db/444747" target="_blank" rel="noopener">https://www.modb.pro/db/444747</a></p>]]></content>
       
       
       
@@ -290,11 +290,11 @@
     
     
     <entry>
-      <title>elasticsearch实际应用场景与扩展方案，容灾方案</title>
-      <link href="/es-es-work-place/"/>
-      <url>/es-es-work-place/</url>
+      <title>pod 配置demo</title>
+      <link href="/k8s-pod-setting/"/>
+      <url>/k8s-pod-setting/</url>
       
-        <content type="html"><![CDATA[<p>浅显概括一下es的能力：分词能力，倒排索引，聚合计算能力。</p><p>能力示意图</p><h3 id="实际应用场景"><a href="#实际应用场景" class="headerlink" title="实际应用场景"></a>实际应用场景</h3><p>稍微了解一下elasticsearch生态</p><p><img src="https://yycreate.github.io/img/es/es_env.png" alt="es_env.png"></p><h4 id="1-实时日志分析"><a href="#1-实时日志分析" class="headerlink" title="1.实时日志分析"></a>1.实时日志分析</h4><p>主要运用场景：用户行为的业务日志（埋点），运营日志（系统的慢性能的接口）等等</p><blockquote><p>通常这种场景使用elk/efk完成：<br><img src="https://yycreate.github.io/img/es/EFK.png" alt="EFK.png"></p></blockquote><p>扩容：</p><h4 id="2-搜索服务"><a href="#2-搜索服务" class="headerlink" title="2.搜索服务"></a>2.搜索服务</h4><blockquote><p>微服务小程序内容索引架构，可以基于不同业务将数据拆分为多个子库做业务隔离。<br><img src="https://yycreate.github.io/img/es/es_search.png" alt="es_search.png"></p><p>适用业务<br>例如：feed流</p></blockquote><h4 id="3-时序分析"><a href="#3-时序分析" class="headerlink" title="3.时序分析"></a>3.时序分析</h4><p>TimeStream优化Elasticsearch在存储指标数据方面的DSL查询复杂且慢以及存储成本过高等问题</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PUT _time_stream/test_stream</span><br></pre></td></tr></table></figure><blockquote><p>TimeStream+Es+Prometheus+Grafana<br><img src="https://yycreate.github.io/img/es/Grafana.png" alt="Grafana.png"></p></blockquote><h3 id="es集群优化方案"><a href="#es集群优化方案" class="headerlink" title="es集群优化方案"></a>es集群优化方案</h3><h4 id="1-主要的优化项"><a href="#1-主要的优化项" class="headerlink" title="1.主要的优化项"></a>1.主要的优化项</h4><p><img src="https://yycreate.github.io/img/es/es_well_direction.png" alt="img_1.png"></p><h5 id="优化方案"><a href="#优化方案" class="headerlink" title="优化方案"></a><font color=#329999>优化方案</font></h5><p>限流方案：</p><ul><li>内部服务调用权限，只有认证的服务才能进行调度。</li><li>使用队列：优化队列优先级</li><li>内存优化使用：全链路 + 精准匹配</li><li>多租户: CVM/Cgroups</li></ul><p>成本优化方案：</p><p>硬件成本</p><ul><li>冷热分离：使用混合存储平衡成本，性能</li><li>Rollup：预计算换取存储，性能</li><li>备份归档：使用廉价的存储系统备份</li><li>存储裁剪，生命周期管理等等</li></ul><p>内存成本</p><ul><li>LRU Cache：提升内存利用率 </li><li>Off Heap：降低堆内存，提高节点规格</li></ul><h5 id="方案实践"><a href="#方案实践" class="headerlink" title="方案实践"></a><font color=#329999>方案实践</font></h5><p>es6.x开始推出Rollup。</p><blockquote><p>Rollup 类似于大数据场景下的 Cube、物化视图，它的核心思想是通过预计算提前生成统计信息，释放掉原始粒度数据，从而降低存储成本、提高查询性能，通常会有数据级的收益。</p></blockquote><p>// TODO</p><p>索引汇总作业<br><a href="https://www.modb.pro/db/444747" target="_blank" rel="noopener">https://www.modb.pro/db/444747</a></p>]]></content>
+        <content type="html"><![CDATA[<p><a href="https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/resource-metrics-pipeline/" target="_blank" rel="noopener">https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/resource-metrics-pipeline/</a></p><h3 id="安装简化的k8s集群-kuboard-spray"><a href="#安装简化的k8s集群-kuboard-spray" class="headerlink" title="安装简化的k8s集群 kuboard-spray"></a>安装简化的k8s集群 kuboard-spray</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run -d \</span><br><span class="line">  --privileged \</span><br><span class="line">  --restart=unless-stopped \</span><br><span class="line">  --name=kuboard-spray \</span><br><span class="line">  -p 80:80/tcp \</span><br><span class="line">  -v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">  -v ~/kuboard-spray-data:/data \</span><br><span class="line">  eipwork/kuboard-spray:latest-amd64</span><br></pre></td></tr></table></figure><p>docker run -d —privileged —restart=unless-stopped —name=kuboard-spray -p 80:80/tcp -v /var/run/docker.sock:/var/run/docker.sock -v ~/kuboard-spray-data:D\:/data eipwork/kuboard-spray:latest-amd64</p><h3 id="轻量版k8s-k3s"><a href="#轻量版k8s-k3s" class="headerlink" title="轻量版k8s - k3s"></a>轻量版k8s - k3s</h3><p><a href="https://docs.k3s.io/zh/" target="_blank" rel="noopener">https://docs.k3s.io/zh/</a></p><blockquote><p>在浏览器打开地址 <a href="http://这台机器的IP，输入用户名" target="_blank" rel="noopener">http://这台机器的IP，输入用户名</a> admin，默认密码 Kuboard123，即可登录 Kuboard-Spray 界面</p></blockquote><hr><h3 id="为POD分配资源"><a href="#为POD分配资源" class="headerlink" title="为POD分配资源"></a>为POD分配资源</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">memory-demo</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">mem-example</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">memory-demo-ctr</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">polinux/stress</span></span><br><span class="line">    <span class="attr">resources:</span></span><br><span class="line">      <span class="attr">requests:</span></span><br><span class="line">        <span class="attr">memory:</span> <span class="string">"100Mi"</span></span><br><span class="line">      <span class="attr">limits:</span></span><br><span class="line">        <span class="attr">memory:</span> <span class="string">"200Mi"</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">["stress"]</span></span><br><span class="line">    <span class="attr">args:</span> <span class="string">["--vm",</span> <span class="string">"1"</span><span class="string">,</span> <span class="string">"--vm-bytes"</span><span class="string">,</span> <span class="string">"150M"</span><span class="string">,</span> <span class="string">"--vm-hang"</span><span class="string">,</span> <span class="string">"1"</span><span class="string">]</span></span><br></pre></td></tr></table></figure><h2 id=""><a href="#" class="headerlink" title="#"></a>#</h2><hr><h3 id="k8s工具-管理工具"><a href="#k8s工具-管理工具" class="headerlink" title="k8s工具 管理工具"></a>k8s工具 管理工具</h3><h4 id="kubeshpere"><a href="#kubeshpere" class="headerlink" title="kubeshpere"></a>kubeshpere</h4><h4 id="kuboard"><a href="#kuboard" class="headerlink" title="kuboard"></a>kuboard</h4><p><a href="https://kuboard.cn/learning/" target="_blank" rel="noopener">https://kuboard.cn/learning/</a></p>]]></content>
       
       
       

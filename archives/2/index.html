@@ -164,14 +164,14 @@
 
                         
                         <li>
-                            <a href="/categories/">Categories</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/categories/">Categories</a>
                         </li>
                         
                     
@@ -326,24 +326,17 @@
 
         <div class="post-preview">
 
-            <a href="/server-DDD-area/">
+            <a href="/redis-redis-point/">
                 <h2 class="post-title">
-                    DDD领域模型
+                    redis的使用
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    注： 这是很抽象的概念，尽量举例，让概念更好理解。
-1. 聚合根，聚合
-定义：聚合是用来定义领域所有权和边界的。
-
-实体
-定义：一个由它的标识定义的对象叫做实体；具有唯一标识性和可变性；它是具有业务逻辑；对应现实世界一个具体的业务对象。
-
-简而言之，就是把多个相关的值与对象整体堪称一个域，简化整体的关系。
-2. 领域，子域
-领域即问题域，通常是根据一个组织所处的行业进行识别，它基于业务的愿景......
+                    该篇不会写redis的基础使用，而是根据redis的特性去挖掘一下原理，并深入理解
+redis 淘汰策略redis 内存访问流程https://www.jianshu.com/p/2ce36bca2869
+redis 数据同步流程...
                 </div>
             </a>
             
@@ -430,16 +423,16 @@ mongodb是文档型数据库，文档结构是BSON（binary serialized document 
 
         <div class="post-preview">
 
-            <a href="/redis-red-lock/">
+            <a href="/protocol-tcp/">
                 <h2 class="post-title">
-                    红锁，redis主从部署的分布式锁
+                    protocol-tcp
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
                     
-红锁采用主节点过半机制，即获取锁或者释放锁成功的标志为：在过半的节点上操作成功。
+tcp 黏包/沾包
 
 ...
                 </div>
@@ -463,16 +456,16 @@ mongodb是文档型数据库，文档结构是BSON（binary serialized document 
 
         <div class="post-preview">
 
-            <a href="/protocol-tcp/">
+            <a href="/redis-red-lock/">
                 <h2 class="post-title">
-                    protocol-tcp
+                    红锁，redis主从部署的分布式锁
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
                     
-tcp 黏包/沾包
+红锁采用主节点过半机制，即获取锁或者释放锁成功的标志为：在过半的节点上操作成功。
 
 ...
                 </div>
@@ -526,22 +519,15 @@ tcp 黏包/沾包
 
         <div class="post-preview">
 
-            <a href="/mysql-mysql-explain-plan/">
+            <a href="/mysql-myql-excel-sql/">
                 <h2 class="post-title">
-                    mysql 执行计划
+                    SQL语句是如何执行的
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    执行语句语法EXPLAIN/DESC SQL语句
-1explain
-执行计划参数详解1.执行计划参数select_type查询类型
-- SIMPLE：简单查询
-- PRIMARY：复杂查询中最外层的 select
-- SUBQUERY：包含在 select 中的子查询（不在 from 子句中）
-- DERIVED：包含在 from 子句中的子查询（会将结果存放在一个临时表中，也称为派生表）
-......
+                    mysql 结构执行excel的流程...
                 </div>
             </a>
             
@@ -563,15 +549,22 @@ tcp 黏包/沾包
 
         <div class="post-preview">
 
-            <a href="/mysql-myql-excel-sql/">
+            <a href="/mysql-mysql-explain-plan/">
                 <h2 class="post-title">
-                    SQL语句是如何执行的
+                    mysql 执行计划
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    mysql 结构执行excel的流程...
+                    执行语句语法EXPLAIN/DESC SQL语句
+1explain
+执行计划参数详解1.执行计划参数select_type查询类型
+- SIMPLE：简单查询
+- PRIMARY：复杂查询中最外层的 select
+- SUBQUERY：包含在 select 中的子查询（不在 from 子句中）
+- DERIVED：包含在 from 子句中的子查询（会将结果存放在一个临时表中，也称为派生表）
+......
                 </div>
             </a>
             
@@ -840,15 +833,15 @@ Broker:简单来说，就是一个消息队列服务器实体。
         </li>
       
         <li>
-          <a href="/vm-graal-VM/">graal vm</a>
-        </li>
-      
-        <li>
           <a href="/vm-PRNG/">vm-PRNG</a>
         </li>
       
         <li>
           <a href="/vm-g1-zgc/">G1 与 ZGC 的全过程解析</a>
+        </li>
+      
+        <li>
+          <a href="/vm-graal-VM/">graal vm</a>
         </li>
       
     </ul>
