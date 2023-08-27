@@ -33,15 +33,11 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/redis-redis-point/</loc>
-    <lastmod>2023-05-26</lastmod>
-  </url>
-  <url>
     <loc>https://dusign.net/redis-redis-main/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/redis-redis-business/</loc>
+    <loc>https://dusign.net/redis-redis-point/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -53,7 +49,11 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/protocol-tcp/</loc>
+    <loc>https://dusign.net/redis-redis-business/</loc>
+    <lastmod>2023-05-26</lastmod>
+  </url>
+  <url>
+    <loc>https://dusign.net/nosql-mongo/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -61,7 +61,7 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/nosql-mongo/</loc>
+    <loc>https://dusign.net/protocol-tcp/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
@@ -89,15 +89,15 @@
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
-    <loc>https://dusign.net/es-es-work-place/</loc>
-    <lastmod>2023-05-26</lastmod>
-  </url>
-  <url>
     <loc>https://dusign.net/es-es-set/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
     <loc>https://dusign.net/k8s-pod-setting/</loc>
+    <lastmod>2023-05-26</lastmod>
+  </url>
+  <url>
+    <loc>https://dusign.net/es-es-work-place/</loc>
     <lastmod>2023-05-26</lastmod>
   </url>
   <url>
