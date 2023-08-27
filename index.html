@@ -178,17 +178,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/photography/">Photography</a>
                         </li>
                         
                     
 
                         
-                    
-
-                        
                         <li>
-                            <a href="/photography/">Photography</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -203,6 +200,9 @@
                         <li>
                             <a href="/tags/">Tags</a>
                         </li>
+                        
+                    
+
                         
                     
                     
@@ -438,22 +438,17 @@ jdk17商用协议
 
         <div class="post-preview">
 
-            <a href="/vm-g1-zgc/">
+            <a href="/vm-graal-VM/">
                 <h2 class="post-title">
-                    G1 与 ZGC 的全过程解析
+                    graal vm
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    1.JDK16 JVM相关的改动ZGC 并发栈处理// todo 待一篇详细ZGC的流程场景
-弹性元数据及时的将 HotSpot 中无用的元数据(metaspace)内存还给操作系统，减少元数据的内存占用。
-
-大概介绍一下垃圾处理器的种类与处理流程
-1.G1 (Garbage-First)垃圾回收器
-jdk8起才支持G1垃圾回收器，启动参数添加 -XX:+UseG1GC
-
-G1垃圾回收器的主......
+                    官网
+一.共识在JVM的hotspot实现上增强的的全栈型虚拟机。虚拟机支持原本Java虚拟机上的Java、Scala、Groovy、Kotlin还支持基于LLVM的C、C++、Rust还支持其他像JavaScript、Ruby、Python和R语言可以无额外开销地混合使用这些编程语言，支持不同语言中混用对方的接口和对象。
+二. 安装开发环境云上环境 ...
                 </div>
             </a>
             
@@ -475,17 +470,22 @@ G1垃圾回收器的主......
 
         <div class="post-preview">
 
-            <a href="/vm-graal-VM/">
+            <a href="/vm-g1-zgc/">
                 <h2 class="post-title">
-                    graal vm
+                    G1 与 ZGC 的全过程解析
                 </h2>
                 <h3 class="post-subtitle">
                     
                 </h3>
                 <div class="post-content-preview">
-                    官网
-一.共识在JVM的hotspot实现上增强的的全栈型虚拟机。虚拟机支持原本Java虚拟机上的Java、Scala、Groovy、Kotlin还支持基于LLVM的C、C++、Rust还支持其他像JavaScript、Ruby、Python和R语言可以无额外开销地混合使用这些编程语言，支持不同语言中混用对方的接口和对象。
-二. 安装开发环境云上环境 ...
+                    1.JDK16 JVM相关的改动ZGC 并发栈处理// todo 待一篇详细ZGC的流程场景
+弹性元数据及时的将 HotSpot 中无用的元数据(metaspace)内存还给操作系统，减少元数据的内存占用。
+
+大概介绍一下垃圾处理器的种类与处理流程
+1.G1 (Garbage-First)垃圾回收器
+jdk8起才支持G1垃圾回收器，启动参数添加 -XX:+UseG1GC
+
+G1垃圾回收器的主......
                 </div>
             </a>
             
@@ -599,54 +599,6 @@ G1垃圾回收器的主......
 
         <div class="post-preview">
 
-            <a href="/redis-redis-main/">
-                <h2 class="post-title">
-                    redis整理场景以及使用
-                </h2>
-                <h3 class="post-subtitle">
-                    
-                </h3>
-                <div class="post-content-preview">
-                    
-0.共识
-1.redis部署架构
-2.适用场景
-3.实际问题及其解决方案
-4.压测方案及容灾方案
-5.数据迁移与备份
-
-零.共识查询组件单线程，链接多路复用，有事务提交，但不能回滚。
-一.redis部署架构
-1.单机架构忽略吧 单机架构有相当多问题
-
-1.单点问题
-2.多路复用
-3.
-
-2.哨兵架构在部署redis的同时也需要部署哨兵，哨兵主要功能分为：
-
-监控redis主从节点的运行状况......
-                </div>
-            </a>
-            
-                <p class="post-meta" style="margin: 10px 0;">
-                    Posted by eliooyang on
-                    2023-05-26
-                </p>
-                <div class="tags">
-                    
-                </div>
-            
-
-        </div>
-        <hr>
-
-    
-
-    
-
-        <div class="post-preview">
-
             <a href="/redis-redis-point/">
                 <h2 class="post-title">
                     redis的使用
@@ -689,6 +641,54 @@ redis 数据同步流程...
                 <div class="post-content-preview">
                     业务有序消费方案
 ...
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by eliooyang on
+                    2023-05-26
+                </p>
+                <div class="tags">
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/redis-redis-main/">
+                <h2 class="post-title">
+                    redis整理场景以及使用
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    
+0.共识
+1.redis部署架构
+2.适用场景
+3.实际问题及其解决方案
+4.压测方案及容灾方案
+5.数据迁移与备份
+
+零.共识查询组件单线程，链接多路复用，有事务提交，但不能回滚。
+一.redis部署架构
+1.单机架构忽略吧 单机架构有相当多问题
+
+1.单点问题
+2.多路复用
+3.
+
+2.哨兵架构在部署redis的同时也需要部署哨兵，哨兵主要功能分为：
+
+监控redis主从节点的运行状况......
                 </div>
             </a>
             
@@ -872,11 +872,11 @@ redis 数据同步流程...
         </li>
       
         <li>
-          <a href="/vm-g1-zgc/">G1 与 ZGC 的全过程解析</a>
+          <a href="/vm-graal-VM/">graal vm</a>
         </li>
       
         <li>
-          <a href="/vm-graal-VM/">graal vm</a>
+          <a href="/vm-g1-zgc/">G1 与 ZGC 的全过程解析</a>
         </li>
       
     </ul>
